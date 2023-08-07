@@ -9,8 +9,10 @@ const routes: Array<RouteRecordRaw> = [
   },
 ]
 
+const BASE_URL = '/monitoring'
+
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(BASE_URL),
   routes,
 })
 

@@ -1,21 +1,93 @@
 <template>
-  <v-layout class="h-100 bg-purple-darken-4 pa-6">
-    <v-card
-      elevation="12"
-      color="indigo-darken-4"
-      title="This is a title"
-      subtitle="This is a subtitle"
-      text="This is content"
-      class=""
-    ></v-card>
+  <v-layout class="pa-6 flex-1-1 flex-wrap">
+    <v-row>
+      <v-col v-for="n in 3" :key="n" cols="12" md="4">
+        <v-card
+          elevation="12"
+          color="indigo-darken-3"
+          title="Итоговые значения"
+          class="h-100 d-flex flex-column"
+        >
+          <v-layout class="align-end justify-center flex-1-1">
+            <Bar :data="data" :options="options" />
+          </v-layout>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-layout>
 </template>
 
 <script lang="ts">
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from 'chart.js'
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+import { Bar } from 'vue-chartjs'
 import { defineComponent } from 'vue'
+import { TypedChartComponent } from 'vue-chartjs/dist/types'
 
 export default defineComponent({
   name: 'DashboardView',
+
+  components: {
+    Bar,
+  },
+
+  data: () => ({
+    data: {
+      labels: ['Доходы', 'Расходы'],
+      datasets: [
+        {
+          label: 'Итоговые значения',
+          data: [40, 20],
+          backgroundColor: ['#1B5E20', '#B71C1C'],
+          maxBarThickness: 64,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          display: true,
+          ticks: {
+            color: 'white',
+          },
+        },
+        x: {
+          grid: {
+            offset: false,
+            display: false,
+          },
+          ticks: {
+            color: 'white',
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: false,
+          labels: {
+            color: 'rgb(255, 99, 132)',
+            font: {
+              size: 14,
+            },
+          },
+        },
+      },
+      layout: {
+        padding: 12,
+      },
+    },
+  }),
 })
 </script>
 

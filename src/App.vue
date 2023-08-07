@@ -1,6 +1,6 @@
 <template>
   <v-layout class="flex-1-1 h-100">
-    <v-app-bar density="compact" color="purple-darken-3"></v-app-bar>
+    <v-app-bar density="compact" color="indigo-darken-3"></v-app-bar>
 
     <v-main>
       <router-view />
