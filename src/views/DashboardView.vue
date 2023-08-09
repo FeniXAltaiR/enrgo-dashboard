@@ -9,7 +9,7 @@
           class="h-100 d-flex flex-column"
         >
           <v-layout class="align-end justify-center flex-1-1">
-            <Bar :data="data" :options="options" />
+            <BarChart :data="data" :options="options" />
           </v-layout>
         </v-card>
       </v-col>
@@ -18,26 +18,14 @@
 </template>
 
 <script lang="ts">
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-} from 'chart.js'
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
-import { Bar } from 'vue-chartjs'
+import BarChart from '@/components/BarChart/BarChart.vue'
 import { defineComponent } from 'vue'
-import { TypedChartComponent } from 'vue-chartjs/dist/types'
 
 export default defineComponent({
   name: 'DashboardView',
 
   components: {
-    Bar,
+    BarChart,
   },
 
   data: () => ({

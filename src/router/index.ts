@@ -3,13 +3,13 @@ import DashboardView from '@/views/DashboardView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/monitoring',
     name: 'dashboard',
     component: DashboardView,
   },
 ]
 
-const BASE_URL = '/monitoring'
+const BASE_URL = '/'
 
 const router = createRouter({
   history: createWebHistory(BASE_URL),

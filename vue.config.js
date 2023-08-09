@@ -8,4 +8,9 @@ module.exports = defineConfig({
   //   })
   // },
   assetsDir: 'monitoring',
+  devServer: {
+    client: {
+      overlay: false,
+    },
+  },
 })
