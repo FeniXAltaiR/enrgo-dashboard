@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import keycloak from '@/utils/keycloak.js'
+import keycloak from '@/utils/keycloak'
 
 // Vuetify
 import 'vuetify/styles'

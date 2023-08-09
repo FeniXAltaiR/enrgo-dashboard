@@ -19,8 +19,10 @@
 
 <script lang="ts">
 import BarChart from '@/components/BarChart/BarChart.vue'
-import colors from 'vuetify/lib/util/colors'
 import { defineComponent } from 'vue'
+
+// @ts-ignore
+import colors from 'vuetify/lib/util/colors'
 
 export default defineComponent({
   name: 'DashboardView',
