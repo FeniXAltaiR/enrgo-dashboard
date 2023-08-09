@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import keycloak from '@/utils/keycloak.js'
 
 // Vuetify
 import 'vuetify/styles'
@@ -35,9 +36,11 @@ const vuetify = createVuetify({
   },
 })
 
-createApp(App)
-  .use(store)
-  .use(router)
-  .use(vuetify)
-  .component('VueDatePicker', VueDatePicker)
-  .mount('#app')
+keycloak.init({ onLoad: 'login-required' }).then(() => {
+  createApp(App)
+    .use(store)
+    .use(router)
+    .use(vuetify)
+    .component('VueDatePicker', VueDatePicker)
+    .mount('#app')
+})
