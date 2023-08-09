@@ -2,7 +2,12 @@
   <v-layout class="flex-1-1 h-100">
     <v-app-bar color="indigo-darken-3" class="px-4">
       <v-layout style="column-gap: 12px">
-        <v-btn icon="$vuetify" replace to="/" density="comfortable"></v-btn>
+        <v-btn
+          icon="mdi-exit-to-app"
+          replace
+          href="/"
+          density="comfortable"
+        ></v-btn>
 
         <vue-date-picker
           v-model="date"

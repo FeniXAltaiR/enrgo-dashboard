@@ -1,12 +1,12 @@
 <template>
-  <v-layout class="pa-6 flex-1-1 flex-wrap">
+  <v-container class="flex-1-1 flex-wrap" style="max-width: 1280px">
     <v-row>
-      <v-col v-for="n in 3" :key="n" cols="12" md="4">
+      <v-col cols="12" md="12">
         <v-card
           elevation="12"
           color="indigo-darken-3"
           title="Итоговые значения"
-          class="h-100 d-flex flex-column"
+          class="d-flex flex-column w-100"
         >
           <v-layout class="align-end justify-center flex-1-1">
             <BarChart :data="data" :options="options" />
@@ -14,11 +14,12 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-layout>
+  </v-container>
 </template>
 
 <script lang="ts">
 import BarChart from '@/components/BarChart/BarChart.vue'
+import colors from 'vuetify/lib/util/colors'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -33,9 +34,21 @@ export default defineComponent({
       labels: ['Доходы', 'Расходы'],
       datasets: [
         {
-          label: 'Итоговые значения',
+          label: 'Товары',
           data: [40, 20],
-          backgroundColor: ['#1B5E20', '#B71C1C'],
+          backgroundColor: colors.red.darken2,
+          maxBarThickness: 64,
+        },
+        {
+          label: 'Работы',
+          data: [32, 16],
+          backgroundColor: colors.yellow.darken2,
+          maxBarThickness: 64,
+        },
+        {
+          label: 'Люди',
+          data: [24, 12],
+          backgroundColor: colors.green.darken2,
           maxBarThickness: 64,
         },
       ],
@@ -49,6 +62,7 @@ export default defineComponent({
           ticks: {
             color: 'white',
           },
+          stacked: true,
         },
         x: {
           grid: {
@@ -58,13 +72,14 @@ export default defineComponent({
           ticks: {
             color: 'white',
           },
+          stacked: true,
         },
       },
       plugins: {
         legend: {
-          display: false,
+          display: true,
           labels: {
-            color: 'rgb(255, 99, 132)',
+            color: 'white',
             font: {
               size: 14,
             },
