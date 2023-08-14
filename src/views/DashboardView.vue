@@ -9,7 +9,7 @@
           class="d-flex flex-column w-100 h-100"
         >
           <v-layout class="align-end justify-center flex-1-1">
-            <BarChart :data="data" :options="options" />
+            <BarChart :data="data" :options="options" height="320" />
           </v-layout>
         </v-card>
       </v-col>
