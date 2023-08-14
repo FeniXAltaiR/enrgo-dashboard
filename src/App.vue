@@ -1,7 +1,7 @@
 <template>
   <v-layout class="flex-1-1 h-100">
     <v-app-bar color="indigo-darken-3" class="px-4">
-      <v-layout style="column-gap: 12px">
+      <v-layout style="column-gap: 12px" class="align-center">
         <v-btn
           icon="mdi-exit-to-app"
           replace
@@ -16,11 +16,40 @@
           model-type="yyyy-MM-dd"
           format="yyyy-MM-dd"
           :enable-time-picker="false"
+          mode-height="50"
           dark
           locale="ru"
           auto-apply
           range
         ></vue-date-picker>
+
+        <v-spacer></v-spacer>
+
+        <v-autocomplete
+          label="Контрагент"
+          :items="dicts.counterparties"
+          style="max-width: 320px"
+          density="compact"
+          variant="solo"
+          hide-details
+          item-title="name"
+          item-value="id"
+          single-line
+          clearable
+        ></v-autocomplete>
+
+        <v-autocomplete
+          label="Договор"
+          :items="dicts.contracts"
+          style="max-width: 320px"
+          density="compact"
+          variant="solo"
+          hide-details
+          item-title="short_name"
+          item-value="id"
+          single-line
+          clearable
+        ></v-autocomplete>
       </v-layout>
     </v-app-bar>
 
@@ -31,7 +60,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'App',
@@ -39,7 +69,14 @@ export default defineComponent({
   setup() {
     const date = ref<[string?, string?]>([])
 
-    return { date }
+    const store = useStore()
+
+    onMounted(() => {
+      store.dispatch('postDict', 'counterparties')
+      store.dispatch('postDict', 'contracts')
+    })
+
+    return { date, dicts: computed(() => store.state.dicts) }
   },
 })
 </script>

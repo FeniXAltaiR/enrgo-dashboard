@@ -12,5 +12,11 @@ module.exports = defineConfig({
     client: {
       overlay: false,
     },
+    proxy: {
+      api: {
+        target: 'https://enrgocon.com',
+        changeOrigin: true,
+      },
+    },
   },
 })
