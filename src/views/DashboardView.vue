@@ -1,10 +1,13 @@
 <template>
-  <v-container class="flex-1-1 flex-wrap" style="max-width: 1280px">
+  <v-container
+    class="flex-1-1 flex-wrap grey-lighten-5"
+    style="max-width: 1280px"
+  >
     <v-row>
       <v-col cols="12" md="6" sm="12">
         <v-card
           elevation="12"
-          color="indigo-darken-3"
+          color="white"
           title="Итоговые значения"
           class="d-flex flex-column w-100 h-100"
         >
@@ -15,7 +18,10 @@
       </v-col>
 
       <v-col cols="12" md="3" sm="6">
-        <v-layout class="flex-column h-100" style="row-gap: 24px">
+        <v-layout
+          class="flex-column h-100"
+          style="row-gap: 24px; overflow: initial"
+        >
           <dashboard-view-card-wrapper
             title="Состояние договора"
             value="На исполнении"
@@ -26,7 +32,9 @@
             title="Дебиторская задолженность"
             value="1000 руб"
             color="error"
-          ></dashboard-view-card-wrapper>
+          >
+            <!-- <LineChart :data="data" :options="options" height="320" />  -->
+          </dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
             title="Плановая прибыль"
@@ -36,11 +44,14 @@
       </v-col>
 
       <v-col cols="12" md="3" sm="6">
-        <v-layout class="flex-column h-100" style="row-gap: 24px">
+        <v-layout
+          class="flex-column h-100"
+          style="row-gap: 24px; overflow: initial"
+        >
           <dashboard-view-card-wrapper
             title="Цена договора"
             value="20000 руб"
-            color="white"
+            color="info"
           ></dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
@@ -108,7 +119,7 @@ export default defineComponent({
           beginAtZero: true,
           display: true,
           ticks: {
-            color: 'white',
+            // color: 'white',
           },
           stacked: true,
         },
@@ -118,7 +129,7 @@ export default defineComponent({
             display: false,
           },
           ticks: {
-            color: 'white',
+            // color: 'white',
           },
           stacked: true,
         },
@@ -127,7 +138,7 @@ export default defineComponent({
         legend: {
           display: true,
           labels: {
-            color: 'white',
+            // color: 'white',
             font: {
               size: 14,
             },
@@ -136,6 +147,29 @@ export default defineComponent({
       },
       layout: {
         padding: 12,
+      },
+    },
+
+    lineData: {
+      labels: [],
+      datasets: [
+        {
+          label: 'Dataset 1',
+          data: [],
+        },
+      ],
+    },
+
+    lineOptions: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: false,
+          text: 'Chart.js Line Chart',
+        },
       },
     },
   }),

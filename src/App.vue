@@ -1,6 +1,6 @@
 <template>
   <v-layout class="flex-1-1 h-100">
-    <v-app-bar color="indigo-darken-3" class="px-4">
+    <v-app-bar color="grey-darken-4" class="px-4">
       <v-layout style="column-gap: 12px" class="align-center">
         <v-btn
           icon="mdi-exit-to-app"
@@ -17,7 +17,6 @@
           format="yyyy-MM-dd"
           :enable-time-picker="false"
           mode-height="50"
-          dark
           locale="ru"
           auto-apply
           range
@@ -66,7 +65,7 @@
       </v-layout>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="bg-grey-lighten-5">
       <router-view />
     </v-main>
   </v-layout>
