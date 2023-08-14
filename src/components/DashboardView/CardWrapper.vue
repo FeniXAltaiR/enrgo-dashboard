@@ -4,8 +4,14 @@
     color="indigo-darken-3"
     class="d-flex flex-column w-100 flex-grow-1"
   >
-    <v-card-title class="text-subtitle-1">
-      {{ title }}
+    <v-card-title class="text-subtitle-1 d-flex">
+      <span>{{ title }}</span>
+      <v-spacer></v-spacer>
+      <v-btn
+        density="compact"
+        icon="mdi-dots-horizontal"
+        variant="text"
+      ></v-btn>
     </v-card-title>
 
     <v-card-text

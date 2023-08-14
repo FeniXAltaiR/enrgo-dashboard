@@ -9,6 +9,7 @@ export enum Dicts {
 export default createStore({
   state: {
     dicts: {
+      groups: [],
       counterparties: [],
       contracts: [],
     },

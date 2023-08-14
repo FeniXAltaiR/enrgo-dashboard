@@ -26,6 +26,19 @@
         <v-spacer></v-spacer>
 
         <v-autocomplete
+          label="Группа контрагентов"
+          :items="dicts.groups"
+          style="max-width: 320px"
+          density="compact"
+          variant="solo"
+          hide-details
+          item-title="name"
+          item-value="id"
+          single-line
+          clearable
+        ></v-autocomplete>
+
+        <v-autocomplete
           label="Контрагент"
           :items="dicts.counterparties"
           style="max-width: 320px"
@@ -72,6 +85,7 @@ export default defineComponent({
     const store = useStore()
 
     onMounted(() => {
+      store.dispatch('postDict', 'groups')
       store.dispatch('postDict', 'counterparties')
       store.dispatch('postDict', 'contracts')
     })

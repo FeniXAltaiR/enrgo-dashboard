@@ -29,7 +29,7 @@
           ></dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
-            title="Плановая прибыль по договору"
+            title="Плановая прибыль"
             value="7500 руб"
           ></dashboard-view-card-wrapper>
         </v-layout>
@@ -44,7 +44,7 @@
           ></dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
-            title="Расходы по договору"
+            title="Расходы"
             value="10000 руб"
             color="error"
           ></dashboard-view-card-wrapper>
@@ -61,6 +61,7 @@
 
 <script lang="ts">
 import BarChart from '@/components/BarChart/BarChart.vue'
+// import LineChart from '@/components/LineChart/LineChart.vue'
 import DashboardViewCardWrapper from '@/components/DashboardView/CardWrapper.vue'
 import { defineComponent } from 'vue'
 
@@ -72,6 +73,7 @@ export default defineComponent({
 
   components: {
     BarChart,
+    // LineChart,
     DashboardViewCardWrapper,
   },
 
