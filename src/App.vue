@@ -9,59 +9,11 @@
           density="comfortable"
         ></v-btn>
 
-        <vue-date-picker
-          v-model="date"
-          style="max-width: 320px"
-          :teleport="true"
-          model-type="yyyy-MM-dd"
-          format="yyyy-MM-dd"
-          :enable-time-picker="false"
-          mode-height="50"
-          locale="ru"
-          auto-apply
-          range
-        ></vue-date-picker>
+        <ToolbarDatePicker></ToolbarDatePicker>
 
         <v-spacer></v-spacer>
 
-        <v-autocomplete
-          label="Группа контрагентов"
-          :items="dicts.groups"
-          style="max-width: 320px"
-          density="compact"
-          variant="solo"
-          hide-details
-          item-title="name"
-          item-value="id"
-          single-line
-          clearable
-        ></v-autocomplete>
-
-        <v-autocomplete
-          label="Контрагент"
-          :items="dicts.counterparties"
-          style="max-width: 320px"
-          density="compact"
-          variant="solo"
-          hide-details
-          item-title="name"
-          item-value="id"
-          single-line
-          clearable
-        ></v-autocomplete>
-
-        <v-autocomplete
-          label="Договор"
-          :items="dicts.contracts"
-          style="max-width: 320px"
-          density="compact"
-          variant="solo"
-          hide-details
-          item-title="short_name"
-          item-value="id"
-          single-line
-          clearable
-        ></v-autocomplete>
+        <ToolbarFilters></ToolbarFilters>
       </v-layout>
     </v-app-bar>
 
@@ -72,15 +24,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import ToolbarFilters from '@/components/Toolbar/Filters.vue'
+import ToolbarDatePicker from '@/components/Toolbar/DatePicker.vue'
 
 export default defineComponent({
   name: 'App',
 
-  setup() {
-    const date = ref<[string?, string?]>([])
+  components: {
+    ToolbarFilters,
+    ToolbarDatePicker,
+  },
 
+  setup() {
     const store = useStore()
 
     onMounted(() => {
@@ -88,8 +45,6 @@ export default defineComponent({
       store.dispatch('postDict', 'counterparties')
       store.dispatch('postDict', 'contracts')
     })
-
-    return { date, dicts: computed(() => store.state.dicts) }
   },
 })
 </script>

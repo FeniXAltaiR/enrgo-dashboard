@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import api from '@/api/endpoints'
 
 export enum Dicts {
+  Groups = 'groups',
   Counterparties = 'counterparties',
   Contracts = 'contracts',
 }
@@ -9,10 +10,10 @@ export enum Dicts {
 export default createStore({
   state: {
     dicts: {
-      groups: [],
-      counterparties: [],
-      contracts: [],
-    },
+      [Dicts.Groups]: [],
+      [Dicts.Counterparties]: [],
+      [Dicts.Contracts]: [],
+    } as Record<Dicts, any[]>,
   },
   getters: {},
   mutations: {
