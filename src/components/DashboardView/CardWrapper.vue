@@ -1,7 +1,7 @@
 <template>
   <v-card
     elevation="6"
-    color="white"
+    color="rgba(255, 255, 255, .8)"
     class="d-flex flex-column w-100 flex-grow-1"
     hover
   >

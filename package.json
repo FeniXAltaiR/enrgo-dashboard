@@ -17,6 +17,7 @@
     "keycloak-js": "^22.0.1",
     "vue": "^3.2.13",
     "vue-chartjs": "^5.2.0",
+    "vue-kinesis": "^2.0.5",
     "vue-router": "^4.0.3",
     "vuetify": "^3.3.12",
     "vuex": "^4.0.0"

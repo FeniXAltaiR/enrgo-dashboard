@@ -7,7 +7,7 @@
       <v-col cols="12" md="6" sm="12">
         <v-card
           elevation="12"
-          color="white"
+          :color="color"
           title="Итоговые значения"
           class="d-flex flex-column w-100 h-100"
         >
@@ -149,6 +149,8 @@ export default defineComponent({
         padding: 12,
       },
     },
+
+    color: 'rgba(255, 255, 255, .8)',
 
     lineData: {
       labels: [],

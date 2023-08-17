@@ -17,6 +17,9 @@ import { ru } from 'vuetify/locale'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
+// Kinesis
+import VueKinesis from 'vue-kinesis'
+
 const vuetify = createVuetify({
   components,
   directives,
@@ -41,6 +44,7 @@ keycloak.init({ onLoad: 'login-required' }).then(() => {
     .use(store)
     .use(router)
     .use(vuetify)
+    .use(VueKinesis)
     .component('VueDatePicker', VueDatePicker)
     .mount('#app')
 })

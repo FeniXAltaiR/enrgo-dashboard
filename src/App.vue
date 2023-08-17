@@ -17,8 +17,17 @@
       </v-layout>
     </v-app-bar>
 
-    <v-main class="bg-grey-lighten-5">
-      <router-view />
+    <v-main
+      class="bg-grey-lighten-5"
+      style="
+        background: url('https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg');
+      "
+    >
+      <kinesis-container>
+        <kinesis-element :strength="2" type="depth" transformOrigin="50% 50%">
+          <router-view />
+        </kinesis-element>
+      </kinesis-container>
     </v-main>
   </v-layout>
 </template>
