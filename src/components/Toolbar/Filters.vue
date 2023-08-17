@@ -46,6 +46,7 @@
 import { watch } from 'vue'
 import { defineComponent, ref, computed } from 'vue'
 import { useStore } from 'vuex'
+import { DictsIds } from '@/store'
 
 export default defineComponent({
   name: 'ToolbarFilters',
@@ -53,10 +54,6 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const dicts = computed(() => store.state.dicts)
-
-    const id_group = ref<string | null>(null)
-    const id_counterpartie = ref<string | null>(null)
-    const id_contract = ref<string | null>(null)
 
     const filteredCounterparties = computed(() => {
       if (id_group.value) {
@@ -84,22 +81,44 @@ export default defineComponent({
       )
     })
 
+    const id_group = computed(() => store.state.dictsIds.id_group)
     watch(id_group, () => {
-      id_counterpartie.value = null
-      id_contract.value = null
+      store.commit('setDictId', { dict: DictsIds.Counterpartie, id: null })
+      store.commit('setDictId', { dict: DictsIds.Contract, id: null })
     })
 
+    const id_counterpartie = computed(
+      () => store.state.dictsIds.id_counterpartie
+    )
     watch(id_counterpartie, () => {
-      id_contract.value = null
+      store.commit('setDictId', { dict: DictsIds.Contract, id: null })
     })
 
     return {
       dicts,
       filteredCounterparties,
       filteredContracts,
-      id_group,
-      id_counterpartie,
-      id_contract,
+
+      get id_group() {
+        return store.state.dictsIds.id_group
+      },
+      set id_group(id) {
+        store.commit('setDictId', { dict: DictsIds.Group, id })
+      },
+
+      get id_counterpartie() {
+        return store.state.dictsIds.id_counterpartie
+      },
+      set id_counterpartie(id) {
+        store.commit('setDictId', { dict: DictsIds.Counterpartie, id })
+      },
+
+      get id_contract() {
+        return store.state.dictsIds.id_contract
+      },
+      set id_contract(id) {
+        store.commit('setDictId', { dict: DictsIds.Contract, id })
+      },
     }
   },
 })

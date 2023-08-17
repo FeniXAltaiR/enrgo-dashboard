@@ -14,16 +14,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'ToolbarDatePicker',
 
   setup() {
-    const date = ref<[string?, string?]>([])
+    const store = useStore()
 
     return {
-      date,
+      get date() {
+        return store.state.toolbarDate
+      },
+      set date(value) {
+        store.commit('setToolbarDate', value)
+      },
     }
   },
 })
