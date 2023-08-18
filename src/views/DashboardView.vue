@@ -24,22 +24,39 @@
         >
           <dashboard-view-card-wrapper
             title="Состояние договора"
-            :value="`${reportData?.is_current ?? 0} На исполнении`"
             color="warning"
-          ></dashboard-view-card-wrapper>
-
-          <dashboard-view-card-wrapper
-            title="Дебиторская задолженность"
-            :value="`${reportData?.debt ?? 0} руб`"
-            color="error"
           >
-            <!-- <LineChart :data="data" :options="options" height="320" />  -->
+            <vue-autocounter
+              :startAmount="0"
+              :endAmount="reportData?.is_current ?? 0"
+              :duration="2"
+              suffix=" На исполнении"
+              :autoinit="true"
+            />
           </dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
-            title="Плановая прибыль"
-            :value="`${reportData?.profit ?? 0} руб`"
-          ></dashboard-view-card-wrapper>
+            title="Дебиторская задолженность"
+            color="error"
+          >
+            <vue-autocounter
+              :startAmount="0"
+              :endAmount="reportData?.debt ?? 0"
+              :duration="2"
+              suffix=" руб"
+              :autoinit="true"
+            />
+          </dashboard-view-card-wrapper>
+
+          <dashboard-view-card-wrapper title="Плановая прибыль" color="success">
+            <vue-autocounter
+              :startAmount="0"
+              :endAmount="reportData?.profit ?? 0"
+              :duration="2"
+              suffix=" руб"
+              :autoinit="true"
+            />
+          </dashboard-view-card-wrapper>
         </v-layout>
       </v-col>
 
@@ -48,22 +65,38 @@
           class="flex-column h-100"
           style="row-gap: 24px; overflow: initial"
         >
-          <dashboard-view-card-wrapper
-            title="Цена договора"
-            :value="`${reportData?.c_price ?? 0} руб`"
-            color="info"
-          ></dashboard-view-card-wrapper>
+          <dashboard-view-card-wrapper title="Цена договора" color="info">
+            <vue-autocounter
+              :startAmount="0"
+              :endAmount="Number(reportData?.c_price ?? 0)"
+              :duration="2"
+              suffix=" руб"
+              :autoinit="true"
+            />
+          </dashboard-view-card-wrapper>
 
-          <dashboard-view-card-wrapper
-            title="Расходы"
-            :value="`${reportData?.e_sum ?? 0} руб`"
-            color="error"
-          ></dashboard-view-card-wrapper>
+          <dashboard-view-card-wrapper title="Расходы" color="error">
+            <vue-autocounter
+              :startAmount="0"
+              :endAmount="reportData?.e_sum ?? 0"
+              :duration="2"
+              suffix=" руб"
+              :autoinit="true"
+            />
+          </dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
             title="Прибыль на текущую дату"
-            :value="`${reportData?.curent_profit ?? 0} руб`"
-          ></dashboard-view-card-wrapper>
+            color="success"
+          >
+            <vue-autocounter
+              :startAmount="0"
+              :endAmount="reportData?.curent_profit ?? 0"
+              :duration="2"
+              suffix=" руб"
+              :autoinit="true"
+            />
+          </dashboard-view-card-wrapper>
         </v-layout>
       </v-col>
     </v-row>
@@ -80,6 +113,15 @@ import api from '@/api/endpoints'
 
 // @ts-ignore
 import colors from 'vuetify/lib/util/colors'
+
+export interface ReportData {
+  is_current?: string | number
+  debt?: string | number
+  profit?: string | number
+  c_price?: string | number
+  e_sum?: string | number
+  curent_profit?: string | number
+}
 
 export default defineComponent({
   name: 'DashboardView',
@@ -155,7 +197,7 @@ export default defineComponent({
 
     const store = useStore()
     const date = computed(() => store.state.toolbarDate)
-    const reportData = ref({})
+    const reportData = ref<ReportData>({})
 
     const id_group = computed(() => store.state.dictsIds.id_group)
     const id_counterpartie = computed(

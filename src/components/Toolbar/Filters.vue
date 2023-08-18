@@ -39,6 +39,7 @@
     v-model="id_contract"
     single-line
     clearable
+    disabled
   ></v-autocomplete>
 </template>
 

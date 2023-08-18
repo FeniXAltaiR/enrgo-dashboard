@@ -17,6 +17,9 @@ import { ru } from 'vuetify/locale'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
+// Autocounter
+import Vue3Autocounter from 'vue3-autocounter'
+
 // Kinesis
 import VueKinesis from 'vue-kinesis'
 
@@ -46,5 +49,6 @@ keycloak.init({ onLoad: 'login-required' }).then(() => {
     .use(vuetify)
     .use(VueKinesis)
     .component('VueDatePicker', VueDatePicker)
+    .component('VueAutocounter', Vue3Autocounter)
     .mount('#app')
 })
