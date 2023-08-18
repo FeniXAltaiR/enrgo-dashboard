@@ -39,7 +39,7 @@
     v-model="id_contract"
     single-line
     clearable
-    disabled
+    :disabled="!id_counterpartie"
   ></v-autocomplete>
 </template>
 

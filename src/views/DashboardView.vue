@@ -25,36 +25,45 @@
           <dashboard-view-card-wrapper
             title="Состояние договора"
             color="warning"
+            :loading="loading"
           >
             <vue-autocounter
-              :startAmount="0"
+              :startAmount="prevReportData?.is_current ?? 0"
               :endAmount="reportData?.is_current ?? 0"
-              :duration="2"
+              :duration="1"
               suffix=" На исполнении"
               :autoinit="true"
+              @finished="loading = false"
             />
           </dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
             title="Дебиторская задолженность"
             color="error"
+            :loading="loading"
           >
             <vue-autocounter
-              :startAmount="0"
+              :startAmount="prevReportData?.debt ?? 0"
               :endAmount="reportData?.debt ?? 0"
-              :duration="2"
+              :duration="1"
               suffix=" руб"
               :autoinit="true"
+              @finished="loading = false"
             />
           </dashboard-view-card-wrapper>
 
-          <dashboard-view-card-wrapper title="Плановая прибыль" color="success">
+          <dashboard-view-card-wrapper
+            title="Плановая прибыль"
+            color="success"
+            :loading="loading"
+          >
             <vue-autocounter
-              :startAmount="0"
+              :startAmount="prevReportData?.profit ?? 0"
               :endAmount="reportData?.profit ?? 0"
-              :duration="2"
+              :duration="1"
               suffix=" руб"
               :autoinit="true"
+              @finished="loading = false"
             />
           </dashboard-view-card-wrapper>
         </v-layout>
@@ -65,36 +74,48 @@
           class="flex-column h-100"
           style="row-gap: 24px; overflow: initial"
         >
-          <dashboard-view-card-wrapper title="Цена договора" color="info">
+          <dashboard-view-card-wrapper
+            title="Цена договора"
+            color="info"
+            :loading="loading"
+          >
             <vue-autocounter
-              :startAmount="0"
+              :startAmount="Number(prevReportData?.c_price ?? 0)"
               :endAmount="Number(reportData?.c_price ?? 0)"
-              :duration="2"
+              :duration="1"
               suffix=" руб"
               :autoinit="true"
+              @finished="loading = false"
             />
           </dashboard-view-card-wrapper>
 
-          <dashboard-view-card-wrapper title="Расходы" color="error">
+          <dashboard-view-card-wrapper
+            title="Расходы"
+            color="error"
+            :loading="loading"
+          >
             <vue-autocounter
-              :startAmount="0"
+              :startAmount="prevReportData?.e_sum ?? 0"
               :endAmount="reportData?.e_sum ?? 0"
-              :duration="2"
+              :duration="1"
               suffix=" руб"
               :autoinit="true"
+              @finished="loading = false"
             />
           </dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
             title="Прибыль на текущую дату"
             color="success"
+            :loading="loading"
           >
             <vue-autocounter
-              :startAmount="0"
+              :startAmount="prevReportData?.curent_profit ?? 0"
               :endAmount="reportData?.curent_profit ?? 0"
-              :duration="2"
+              :duration="1"
               suffix=" руб"
               :autoinit="true"
+              @finished="loading = false"
             />
           </dashboard-view-card-wrapper>
         </v-layout>
@@ -195,47 +216,71 @@ export default defineComponent({
     }
     const color = 'rgba(255, 255, 255, .8)'
 
+    // Report Data
     const store = useStore()
     const date = computed(() => store.state.toolbarDate)
+    const prevReportData = ref<ReportData>({})
     const reportData = ref<ReportData>({})
+    const loading = ref<string | boolean>(false)
 
     const id_group = computed(() => store.state.dictsIds.id_group)
     const id_counterpartie = computed(
       () => store.state.dictsIds.id_counterpartie
     )
-    watch([id_group, id_counterpartie, date], async () => {
-      if (id_counterpartie.value) {
+    const id_contract = computed(() => store.state.dictsIds.id_contract)
+    const updateReportData = () => {
+      loading.value = 'warning'
+
+      const setReportData = async (params: Record<string, string> = {}) => {
         const { data: reports } = await api.reports.post({
           date_from: date.value?.[0] ?? null,
           date_to: date.value?.[1] ?? null,
+          type_group: 'itog',
+          ...params,
+        })
+        prevReportData.value = reportData.value
+        reportData.value = reports.models?.[0] ?? {}
+      }
+
+      if (id_contract.value) {
+        setReportData({
+          id_counterpartie: id_counterpartie.value,
+          id_contract: id_contract.value,
+          type_dict: 'counterparties',
+        })
+        return
+      }
+
+      if (id_counterpartie.value) {
+        setReportData({
           id_counterpartie: id_counterpartie.value,
           type_dict: 'counterparties',
-          type_group: 'itog',
         })
-        reportData.value = reports.models?.[0] ?? {}
         return
       }
 
       if (id_group.value) {
-        const { data: reports } = await api.reports.post({
-          date_from: date.value?.[0] ?? null,
-          date_to: date.value?.[1] ?? null,
+        setReportData({
           id_group: id_group.value,
           type_dict: 'groups',
-          type_group: 'itog',
         })
-        reportData.value = reports.models?.[0] ?? {}
         return
       }
 
+      prevReportData.value = reportData.value
       reportData.value = {}
-    })
+      loading.value = false
+    }
+
+    watch([id_group, id_counterpartie, id_contract, date], updateReportData)
 
     return {
       data,
       options,
       color,
+      prevReportData,
       reportData,
+      loading,
     }
   },
 })

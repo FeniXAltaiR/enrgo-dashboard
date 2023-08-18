@@ -3,6 +3,7 @@
     elevation="6"
     color="rgba(255, 255, 255, .8)"
     class="d-flex flex-column w-100 flex-grow-1"
+    :loading="loading"
     hover
   >
     <v-card-title class="text-subtitle-1 d-flex">
@@ -43,6 +44,10 @@ export default defineComponent({
     color: {
       type: String,
       default: 'primary',
+    },
+    loading: {
+      type: [String, Boolean],
+      default: false,
     },
   },
 
