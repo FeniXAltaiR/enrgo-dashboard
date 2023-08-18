@@ -24,13 +24,13 @@
         >
           <dashboard-view-card-wrapper
             title="Состояние договора"
-            value="На исполнении"
+            :value="`${reportData?.is_current ?? 0} На исполнении`"
             color="warning"
           ></dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
             title="Дебиторская задолженность"
-            value="1000 руб"
+            :value="`${reportData?.debt ?? 0} руб`"
             color="error"
           >
             <!-- <LineChart :data="data" :options="options" height="320" />  -->
@@ -38,7 +38,7 @@
 
           <dashboard-view-card-wrapper
             title="Плановая прибыль"
-            value="7500 руб"
+            :value="`${reportData?.profit ?? 0} руб`"
           ></dashboard-view-card-wrapper>
         </v-layout>
       </v-col>
@@ -50,19 +50,19 @@
         >
           <dashboard-view-card-wrapper
             title="Цена договора"
-            value="20000 руб"
+            :value="`${reportData?.c_price ?? 0} руб`"
             color="info"
           ></dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
             title="Расходы"
-            value="10000 руб"
+            :value="`${reportData?.e_sum ?? 0} руб`"
             color="error"
           ></dashboard-view-card-wrapper>
 
           <dashboard-view-card-wrapper
             title="Прибыль на текущую дату"
-            value="2500 руб"
+            :value="`${reportData?.curent_profit ?? 0} руб`"
           ></dashboard-view-card-wrapper>
         </v-layout>
       </v-col>
@@ -74,7 +74,9 @@
 import BarChart from '@/components/BarChart/BarChart.vue'
 // import LineChart from '@/components/LineChart/LineChart.vue'
 import DashboardViewCardWrapper from '@/components/DashboardView/CardWrapper.vue'
-import { defineComponent } from 'vue'
+import { defineComponent, ref, computed, watch } from 'vue'
+import { useStore } from 'vuex'
+import api from '@/api/endpoints'
 
 // @ts-ignore
 import colors from 'vuetify/lib/util/colors'
@@ -88,8 +90,8 @@ export default defineComponent({
     DashboardViewCardWrapper,
   },
 
-  data: () => ({
-    data: {
+  setup() {
+    const data = {
       labels: ['Доходы', 'Расходы'],
       datasets: [
         {
@@ -111,8 +113,8 @@ export default defineComponent({
           maxBarThickness: 64,
         },
       ],
-    },
-    options: {
+    }
+    const options = {
       responsive: true,
       scales: {
         y: {
@@ -148,34 +150,51 @@ export default defineComponent({
       layout: {
         padding: 12,
       },
-    },
+    }
+    const color = 'rgba(255, 255, 255, .8)'
 
-    color: 'rgba(255, 255, 255, .8)',
+    const store = useStore()
+    const date = computed(() => store.state.toolbarDate)
+    const reportData = ref({})
 
-    lineData: {
-      labels: [],
-      datasets: [
-        {
-          label: 'Dataset 1',
-          data: [],
-        },
-      ],
-    },
+    const id_group = computed(() => store.state.dictsIds.id_group)
+    const id_counterpartie = computed(
+      () => store.state.dictsIds.id_counterpartie
+    )
+    watch([id_group, id_counterpartie, date], async () => {
+      if (id_counterpartie.value) {
+        const { data: reports } = await api.reports.post({
+          date_from: date.value?.[0] ?? null,
+          date_to: date.value?.[1] ?? null,
+          id_counterpartie: id_counterpartie.value,
+          type_dict: 'counterparties',
+          type_group: 'itog',
+        })
+        reportData.value = reports.models?.[0] ?? {}
+        return
+      }
 
-    lineOptions: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: false,
-          text: 'Chart.js Line Chart',
-        },
-      },
-    },
-  }),
+      if (id_group.value) {
+        const { data: reports } = await api.reports.post({
+          date_from: date.value?.[0] ?? null,
+          date_to: date.value?.[1] ?? null,
+          id_group: id_group.value,
+          type_dict: 'groups',
+          type_group: 'itog',
+        })
+        reportData.value = reports.models?.[0] ?? {}
+        return
+      }
+
+      reportData.value = {}
+    })
+
+    return {
+      data,
+      options,
+      color,
+      reportData,
+    }
+  },
 })
 </script>
-
-<style></style>

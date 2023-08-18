@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, toRefs } from 'vue'
 
 export default defineComponent({
   name: 'DashboardViewCardWrapper',
@@ -48,7 +48,7 @@ export default defineComponent({
 
   setup(props) {
     return {
-      ...props,
+      ...toRefs(props),
     }
   },
 })
