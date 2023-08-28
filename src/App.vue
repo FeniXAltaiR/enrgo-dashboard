@@ -8,6 +8,12 @@
           href="/"
           density="comfortable"
         ></v-btn>
+        <v-btn
+          icon="mdi-home"
+          replace
+          density="comfortable"
+          to="/monitoring"
+        ></v-btn>
 
         <ToolbarDatePicker></ToolbarDatePicker>
 
@@ -23,9 +29,13 @@
         background: url('https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg');
       "
     >
-      <kinesis-container>
+      <kinesis-container class="h-100">
         <kinesis-element :strength="2" type="depth" transformOrigin="50% 50%">
-          <router-view />
+          <router-view v-slot="{ Component, route }">
+            <!-- <transition appear mode="out-in"> -->
+            <component :is="Component" :key="route.path" />
+            <!-- </transition> -->
+          </router-view>
         </kinesis-element>
       </kinesis-container>
     </v-main>
@@ -65,5 +75,15 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   height: 100vh;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

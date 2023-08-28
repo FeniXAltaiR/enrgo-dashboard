@@ -13,6 +13,7 @@
         density="compact"
         icon="mdi-unfold-more-horizontal"
         variant="text"
+        :to="to"
       ></v-btn>
     </v-card-title>
 
@@ -48,6 +49,10 @@ export default defineComponent({
     loading: {
       type: [String, Boolean],
       default: false,
+    },
+    to: {
+      type: String,
+      default: '/monitoring',
     },
   },
 

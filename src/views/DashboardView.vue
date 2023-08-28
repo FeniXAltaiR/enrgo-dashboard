@@ -26,6 +26,7 @@
             title="Состояние договора"
             color="warning"
             :loading="loading"
+            to="/monitoring/is_current"
           >
             <vue-autocounter
               :startAmount="prevReportData?.is_current ?? 0"
@@ -41,6 +42,7 @@
             title="Дебиторская задолженность"
             color="error"
             :loading="loading"
+            to="/monitoring/debt"
           >
             <vue-autocounter
               :startAmount="prevReportData?.debt ?? 0"
@@ -56,6 +58,7 @@
             title="Плановая прибыль"
             color="success"
             :loading="loading"
+            to="/monitoring/profit"
           >
             <vue-autocounter
               :startAmount="prevReportData?.profit ?? 0"
@@ -78,6 +81,7 @@
             title="Цена договора"
             color="info"
             :loading="loading"
+            to="/monitoring/c_price"
           >
             <vue-autocounter
               :startAmount="Number(prevReportData?.c_price ?? 0)"
@@ -93,6 +97,7 @@
             title="Расходы"
             color="error"
             :loading="loading"
+            to="/monitoring/e_sum"
           >
             <vue-autocounter
               :startAmount="prevReportData?.e_sum ?? 0"
@@ -108,6 +113,7 @@
             title="Прибыль на текущую дату"
             color="success"
             :loading="loading"
+            to="/monitoring/curent_profit"
           >
             <vue-autocounter
               :startAmount="prevReportData?.curent_profit ?? 0"
@@ -129,20 +135,10 @@ import BarChart from '@/components/BarChart/BarChart.vue'
 // import LineChart from '@/components/LineChart/LineChart.vue'
 import DashboardViewCardWrapper from '@/components/DashboardView/CardWrapper.vue'
 import { defineComponent, ref, computed, watch } from 'vue'
-import { useStore } from 'vuex'
-import api from '@/api/endpoints'
 
 // @ts-ignore
 import colors from 'vuetify/lib/util/colors'
-
-export interface ReportData {
-  is_current?: string | number
-  debt?: string | number
-  profit?: string | number
-  c_price?: string | number
-  e_sum?: string | number
-  curent_profit?: string | number
-}
+import { useReportData } from '@/utils/reports'
 
 export default defineComponent({
   name: 'DashboardView',
@@ -217,69 +213,27 @@ export default defineComponent({
     const color = 'rgba(255, 255, 255, .8)'
 
     // Report Data
-    const store = useStore()
-    const date = computed(() => store.state.toolbarDate)
-    const prevReportData = ref<ReportData>({})
-    const reportData = ref<ReportData>({})
-    const loading = ref<string | boolean>(false)
+    const {
+      data: reportData,
+      prevData: prevReportData,
+      loading: reportLoading,
+    } = useReportData({ type_group: 'itog' })
 
-    const id_group = computed(() => store.state.dictsIds.id_group)
-    const id_counterpartie = computed(
-      () => store.state.dictsIds.id_counterpartie
-    )
-    const id_contract = computed(() => store.state.dictsIds.id_contract)
-    const updateReportData = () => {
-      loading.value = 'warning'
+    const loading = ref<string | boolean>(reportLoading.value)
 
-      const setReportData = async (params: Record<string, string> = {}) => {
-        const { data: reports } = await api.reports.post({
-          date_from: date.value?.[0] ?? null,
-          date_to: date.value?.[1] ?? null,
-          type_group: 'itog',
-          ...params,
-        })
-        prevReportData.value = reportData.value
-        reportData.value = reports.models?.[0] ?? {}
+    watch(reportLoading, (value) => {
+      if (value) {
+        loading.value = reportLoading.value
       }
-
-      if (id_contract.value) {
-        setReportData({
-          id_counterpartie: id_counterpartie.value,
-          id_contract: id_contract.value,
-          type_dict: 'counterparties',
-        })
-        return
-      }
-
-      if (id_counterpartie.value) {
-        setReportData({
-          id_counterpartie: id_counterpartie.value,
-          type_dict: 'counterparties',
-        })
-        return
-      }
-
-      if (id_group.value) {
-        setReportData({
-          id_group: id_group.value,
-          type_dict: 'groups',
-        })
-        return
-      }
-
-      prevReportData.value = reportData.value
-      reportData.value = {}
-      loading.value = false
-    }
-
-    watch([id_group, id_counterpartie, id_contract, date], updateReportData)
+    })
 
     return {
       data,
       options,
       color,
-      prevReportData,
-      reportData,
+      prevReportData: computed(() => prevReportData.value.models?.[0] ?? {}),
+      reportData: computed(() => reportData.value.models?.[0] ?? {}),
+      reportLoading,
       loading,
     }
   },
