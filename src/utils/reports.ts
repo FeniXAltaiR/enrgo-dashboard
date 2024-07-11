@@ -96,6 +96,11 @@ export const useReportData = (defaultParams: Record<string, string> = {}) => {
       return
     }
 
+    if (date.value) {
+      setReportData()
+      return
+    }
+
     prevReportData.value = reportData.value
     reportData.value = {}
     chartData.value = undefined
