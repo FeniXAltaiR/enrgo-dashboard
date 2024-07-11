@@ -12,7 +12,12 @@
           class="d-flex flex-column w-100 h-100"
         >
           <v-layout class="align-end justify-center flex-1-1">
-            <BarChart :data="data" :options="options" height="320" />
+            <BarChart
+              :key="JSON.stringify(data) + JSON.stringify(options)"
+              :data="data"
+              :options="options"
+              height="320"
+            />
           </v-layout>
         </v-card>
       </v-col>
@@ -139,6 +144,7 @@ import { defineComponent, ref, computed, watch } from 'vue'
 // @ts-ignore
 import colors from 'vuetify/lib/util/colors'
 import { useReportData } from '@/utils/reports'
+import { ChartData, ChartOptions } from 'chart.js'
 
 export default defineComponent({
   name: 'DashboardView',
@@ -150,37 +156,47 @@ export default defineComponent({
   },
 
   setup() {
-    const data = {
-      labels: ['Доходы', 'Расходы'],
+    const initialChartData: ChartData<
+      'bar',
+      (number | [number, number] | null)[],
+      unknown
+    > = {
+      labels: [],
       datasets: [
         {
-          label: 'Товары',
-          data: [40, 20],
-          backgroundColor: colors.red.darken2,
-          maxBarThickness: 64,
-        },
-        {
-          label: 'Работы',
-          data: [32, 16],
-          backgroundColor: colors.yellow.darken2,
-          maxBarThickness: 64,
-        },
-        {
-          label: 'Люди',
-          data: [24, 12],
-          backgroundColor: colors.green.darken2,
+          label: 'Количество договоров',
+          data: [],
+          backgroundColor: colors.blue.darken2,
           maxBarThickness: 64,
         },
       ],
     }
-    const options = {
+    const options: ChartOptions<'bar'> = {
       responsive: true,
+      animation: {
+        onComplete: function ({ chart }) {
+          const ctx = chart.ctx
+
+          chart.config.data.datasets.forEach(function (dataset, i) {
+            const meta = chart.getDatasetMeta(i)
+
+            meta.data.forEach(function (bar, index) {
+              const data = dataset.data[index]
+
+              ctx.font = '16px verdana'
+              ctx.fillStyle = 'white'
+              ctx.fillText(String(data), bar.x - 28, bar.y + 16)
+            })
+          })
+        },
+      },
       scales: {
         y: {
           beginAtZero: true,
           display: true,
           ticks: {
             // color: 'white',
+            stepSize: 1,
           },
           stacked: true,
         },
@@ -217,6 +233,7 @@ export default defineComponent({
       data: reportData,
       prevData: prevReportData,
       loading: reportLoading,
+      chartData,
     } = useReportData({ type_group: 'itog' })
 
     const loading = ref<string | boolean>(reportLoading.value)
@@ -224,11 +241,13 @@ export default defineComponent({
     watch(reportLoading, (value) => {
       if (value) {
         loading.value = reportLoading.value
+      } else {
+        loading.value = value
       }
     })
 
     return {
-      data,
+      data: computed(() => chartData.value ?? initialChartData),
       options,
       color,
       prevReportData: computed(() => prevReportData.value.models?.[0] ?? {}),

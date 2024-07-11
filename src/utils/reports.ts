@@ -1,14 +1,10 @@
-import {
-  computed,
-  onActivated,
-  onBeforeMount,
-  onMounted,
-  onUpdated,
-  ref,
-  watch,
-} from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import api from '@/api/endpoints'
+import { ChartData } from 'chart.js'
+
+// @ts-ignore
+import colors from 'vuetify/lib/util/colors'
 
 export interface ReportData {
   models?: ReportDataModel[]
@@ -38,6 +34,9 @@ export const useReportData = (defaultParams: Record<string, string> = {}) => {
 
   const prevReportData = ref<ReportData>({})
   const reportData = ref<ReportData>({})
+  const chartData = ref<
+    ChartData<'bar', (number | [number, number] | null)[], unknown> | undefined
+  >(undefined)
   const loading = ref<string | boolean>(false)
   const updateReportData = () => {
     loading.value = 'warning'
@@ -49,8 +48,26 @@ export const useReportData = (defaultParams: Record<string, string> = {}) => {
         date_to: date.value?.[1] ?? null,
         ...params,
       })
+
+      const { data: chart } = await api.reports.chart({
+        ...defaultParams,
+        date_from: date.value?.[0] ?? null,
+        date_to: date.value?.[1] ?? null,
+        ...params,
+      })
+
       prevReportData.value = reportData.value
       reportData.value = reports
+      chartData.value = {
+        labels: chart.labels,
+        datasets: [
+          {
+            ...chart.datasets,
+            backgroundColor: colors.blue.darken2,
+            maxBarThickness: 64,
+          },
+        ],
+      }
       loading.value = false
     }
 
@@ -81,6 +98,7 @@ export const useReportData = (defaultParams: Record<string, string> = {}) => {
 
     prevReportData.value = reportData.value
     reportData.value = {}
+    chartData.value = undefined
     loading.value = false
   }
 
@@ -90,6 +108,7 @@ export const useReportData = (defaultParams: Record<string, string> = {}) => {
 
   return {
     data: reportData,
+    chartData,
     prevData: prevReportData,
     loading,
     refetch: updateReportData,

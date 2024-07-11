@@ -6,6 +6,7 @@ const dicts = {
 
 const reports = {
   post: (params = {}) => HTTP.post('reports', params),
+  chart: (params = {}) => HTTP.post('graph_contract', params),
 }
 
 export default {
