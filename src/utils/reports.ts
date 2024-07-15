@@ -17,12 +17,12 @@ export interface ReportDataColumn {
 }
 
 export interface ReportDataModel {
-  is_current?: string | number
-  debt?: string | number
-  profit?: string | number
-  c_price?: string | number
-  e_sum?: string | number
-  curent_profit?: string | number
+  is_current?: number
+  debt?: number
+  profit?: number
+  c_price?: number
+  e_sum?: number
+  curent_profit?: number
 }
 
 export const useReportData = (defaultParams: Record<string, string> = {}) => {
@@ -97,7 +97,9 @@ export const useReportData = (defaultParams: Record<string, string> = {}) => {
     }
 
     if (date.value) {
-      setReportData()
+      setReportData({
+        type_dict: 'groups',
+      })
       return
     }
 

@@ -1,9 +1,10 @@
 <template>
   <v-container
-    class="flex-1-1 flex-wrap grey-lighten-5"
-    style="max-width: 1280px; position: relative"
+    class="flex-1-1 flex-wrap grey-lighten-5 overflow-hidden"
+    style="position: relative"
+    fluid
   >
-    <v-table density="compact" hover height="100%">
+    <v-table density="compact" hover class="h-100 overflow-auto">
       <thead>
         <tr>
           <th
@@ -39,7 +40,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const { data: reportData, loading } = useReportData({
-      type_group: 'itog',
+      type_group: 'list',
       type_detail: route.params.detail as string,
     })
 

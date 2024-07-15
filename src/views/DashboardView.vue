@@ -40,6 +40,7 @@
               suffix=" На исполнении"
               :autoinit="true"
               @finished="loading = false"
+              separator="."
             />
           </dashboard-view-card-wrapper>
 
@@ -56,6 +57,7 @@
               suffix=" руб"
               :autoinit="true"
               @finished="loading = false"
+              separator="."
             />
           </dashboard-view-card-wrapper>
 
@@ -72,6 +74,7 @@
               suffix=" руб"
               :autoinit="true"
               @finished="loading = false"
+              separator="."
             />
           </dashboard-view-card-wrapper>
         </v-layout>
@@ -95,6 +98,7 @@
               suffix=" руб"
               :autoinit="true"
               @finished="loading = false"
+              separator="."
             />
           </dashboard-view-card-wrapper>
 
@@ -111,6 +115,7 @@
               suffix=" руб"
               :autoinit="true"
               @finished="loading = false"
+              separator="."
             />
           </dashboard-view-card-wrapper>
 
@@ -127,6 +132,7 @@
               suffix=" руб"
               :autoinit="true"
               @finished="loading = false"
+              separator="."
             />
           </dashboard-view-card-wrapper>
         </v-layout>
@@ -234,7 +240,7 @@ export default defineComponent({
       prevData: prevReportData,
       loading: reportLoading,
       chartData,
-    } = useReportData({ type_group: 'itog' })
+    } = useReportData({ type_group: 'list' })
 
     const loading = ref<string | boolean>(reportLoading.value)
 

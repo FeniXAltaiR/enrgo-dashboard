@@ -29,11 +29,16 @@
         background: url('https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg');
       "
     >
-      <kinesis-container class="h-100">
-        <kinesis-element :strength="2" type="depth" transformOrigin="50% 50%">
+      <kinesis-container class="h-100 overflow-hidden">
+        <kinesis-element
+          :strength="0.25"
+          type="depth"
+          transformOrigin="50% 50%"
+          class="h-100"
+        >
           <router-view v-slot="{ Component, route }">
             <!-- <transition appear mode="out-in"> -->
-            <component :is="Component" :key="route.path" />
+            <component :is="Component" :key="route.path" class="h-100" />
             <!-- </transition> -->
           </router-view>
         </kinesis-element>

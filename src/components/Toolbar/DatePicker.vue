@@ -10,6 +10,7 @@
     locale="ru"
     auto-apply
     range
+    multi-calendars
   ></vue-date-picker>
 </template>
 
