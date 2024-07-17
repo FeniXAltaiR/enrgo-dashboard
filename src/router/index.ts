@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import DashboardView from '@/views/DashboardView.vue'
+import DashboardView from '@/views/DashboardView/DashboardView.vue'
 import DashboardDetail from '@/views/DashboardDetail.vue'
 
 const routes: Array<RouteRecordRaw> = [

@@ -1,7 +1,7 @@
 <template>
   <v-card
     elevation="6"
-    color="rgba(255, 255, 255, .8)"
+    :color="active ? 'grey-lighten-3' : 'rgba(255, 255, 255, .8)'"
     class="d-flex flex-column w-100 flex-grow-1"
     :loading="loading"
     hover
@@ -53,6 +53,10 @@ export default defineComponent({
     to: {
       type: String,
       default: '/monitoring',
+    },
+    active: {
+      type: Boolean,
+      default: false,
     },
   },
 

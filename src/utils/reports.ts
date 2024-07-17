@@ -50,9 +50,10 @@ export const useReportData = (defaultParams: Record<string, string> = {}) => {
       })
 
       const { data: chart } = await api.reports.chart({
-        ...defaultParams,
         date_from: date.value?.[0] ?? null,
         date_to: date.value?.[1] ?? null,
+        type_graph: defaultParams.type_graph,
+        type_group: 'graph',
         ...params,
       })
 

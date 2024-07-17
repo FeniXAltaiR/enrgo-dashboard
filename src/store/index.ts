@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import { getDateRangeOfYear } from '@/helpers'
 import api from '@/api/endpoints'
 
 export enum Dicts {
@@ -15,7 +16,7 @@ export enum DictsIds {
 
 export default createStore({
   state: {
-    toolbarDate: null as [string, string] | null,
+    toolbarDate: getDateRangeOfYear() as [string, string] | null,
 
     dictsIds: {
       [DictsIds.Group]: null,
