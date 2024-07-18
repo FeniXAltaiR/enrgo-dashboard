@@ -39,8 +39,14 @@
                 :active="graphType === view.value"
               >
                 <vue-autocounter
-                  :startAmount="prevReportData?.[view.value] ?? 0"
-                  :endAmount="reportData?.[view.value] ?? 0"
+                  :startAmount="
+                    prevReportData?.[view.value]
+                      ? prevReportData?.[view.value]
+                      : 0
+                  "
+                  :endAmount="
+                    reportData?.[view.value] ? reportData?.[view.value] : 0
+                  "
                   :duration="1"
                   :suffix="` ${view.suffix}`"
                   :autoinit="true"
@@ -95,30 +101,17 @@ export default defineComponent({
     }
     const options: ChartOptions<'bar'> = {
       responsive: true,
-      animation: {
-        onComplete: function ({ chart }) {
-          const ctx = chart.ctx
-
-          chart.config.data.datasets.forEach(function (dataset, i) {
-            const meta = chart.getDatasetMeta(i)
-
-            meta.data.forEach(function (bar, index) {
-              const data = dataset.data[index]
-
-              ctx.font = '16px verdana'
-              ctx.fillStyle = 'white'
-              ctx.fillText(String(data), bar.x - 28, bar.y + 16)
-            })
-          })
-        },
-      },
+      animation: {},
       scales: {
         y: {
           beginAtZero: true,
           display: true,
           ticks: {
             // color: 'white',
-            stepSize: 1,
+            // stepSize: 1,
+            format: {
+              // maximumFractionDigits: 1,
+            },
           },
           stacked: true,
         },
@@ -143,6 +136,21 @@ export default defineComponent({
             },
           },
         },
+        // Change options for ALL labels of THIS CHART
+        datalabels: {
+          color: 'white',
+          align: 'top',
+          textAlign: 'left',
+          font: {
+            size: 14,
+          },
+          formatter(value, context) {
+            return new Intl.NumberFormat('ru', {
+              compactDisplay: 'short',
+              notation: 'compact',
+            }).format(value)
+          },
+        },
       },
       layout: {
         padding: 12,
@@ -162,11 +170,14 @@ export default defineComponent({
       loading: reportLoading,
       chartData,
       refetch,
+      updateProps,
     } = useReportData({ type_group: 'list', type_graph: graphType.value })
 
     const loading = ref<string | boolean>(reportLoading.value)
 
-    watch(graphType, refetch)
+    watch(graphType, (type_graph: string) => {
+      updateProps({ type_graph })
+    })
 
     watch(reportLoading, (value) => {
       if (value) {

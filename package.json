@@ -1,6 +1,6 @@
 {
   "name": "enrgo-dashboard",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --port 1234",
@@ -12,6 +12,7 @@
     "@vuepic/vue-datepicker": "^5.4.0",
     "axios": "^1.4.0",
     "chart.js": "^4.3.3",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "core-js": "^3.8.3",
     "dayjs": "^1.11.9",
     "keycloak-js": "^22.0.1",

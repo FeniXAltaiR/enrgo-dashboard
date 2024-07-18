@@ -16,8 +16,10 @@ import {
 import { Bar } from 'vue-chartjs'
 import { defineComponent, PropType } from 'vue'
 import { ChartData } from 'chart.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+ChartJS.register(ChartDataLabels)
 
 export default defineComponent({
   name: 'BarChart',
