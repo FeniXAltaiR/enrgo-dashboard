@@ -171,7 +171,7 @@ export default defineComponent({
       chartData,
       refetch,
       updateProps,
-    } = useReportData({ type_group: 'list', type_graph: graphType.value })
+    } = useReportData({ type_group: 'itog', type_graph: graphType.value })
 
     const loading = ref<string | boolean>(reportLoading.value)
 

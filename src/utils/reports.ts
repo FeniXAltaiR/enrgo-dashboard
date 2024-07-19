@@ -59,7 +59,6 @@ export const useReportData = (props: UseReportData = {}) => {
         date_from: date.value?.[0] ?? null,
         date_to: date.value?.[1] ?? null,
         type_graph: props.type_graph,
-        type_group: 'graph',
         ...params,
       })
 

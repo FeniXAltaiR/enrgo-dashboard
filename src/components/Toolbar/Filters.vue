@@ -34,7 +34,7 @@
     density="compact"
     variant="solo"
     hide-details
-    item-title="short_name"
+    item-title="num"
     item-value="id"
     v-model="id_contract"
     single-line
