@@ -25,18 +25,22 @@ export interface ReportDataModel {
   curent_profit?: number
 }
 
-export interface UseReportData {
+export interface UseReportDataProps {
   type_group?: string
   type_graph?: string
   type_detail?: string
 }
 
-export const useReportData = (props: UseReportData = {}) => {
+export const useReportData = (props?: UseReportDataProps) => {
   const store = useStore()
   const id_group = computed(() => store.state.dictsIds.id_group)
   const id_counterpartie = computed(() => store.state.dictsIds.id_counterpartie)
   const id_contract = computed(() => store.state.dictsIds.id_contract)
   const date = computed(() => store.state.toolbarDate)
+
+  // props
+  const type_graph = ref<keyof ReportDataModel>('is_current')
+  const type_group = ref<string>(props?.type_group ?? '')
 
   const prevReportData = ref<ReportData>({})
   const reportData = ref<ReportData>({})
@@ -44,66 +48,95 @@ export const useReportData = (props: UseReportData = {}) => {
     ChartData<'bar', (number | [number, number] | null)[], unknown> | undefined
   >(undefined)
   const loading = ref<string | boolean>(false)
-  const updateReportData = () => {
+  const refetch = () => {
     loading.value = 'warning'
 
-    const setReportData = async (params: Record<string, string> = {}) => {
+    const updateData = async (
+      reportParams: Record<string, string> = {},
+      chartParams: Record<string, string> = {}
+    ) => {
       const { data: reports } = await api.reports.post({
-        ...props,
         date_from: date.value?.[0] ?? null,
         date_to: date.value?.[1] ?? null,
-        ...params,
+        type_group: type_group.value,
+        ...reportParams,
       })
 
       const { data: chart } = await api.reports.chart({
         date_from: date.value?.[0] ?? null,
         date_to: date.value?.[1] ?? null,
-        type_graph: props.type_graph,
-        ...params,
+        type_graph: type_graph.value,
+        ...chartParams,
       })
 
       prevReportData.value = reportData.value
       reportData.value = reports
       chartData.value = {
         labels: chart.labels,
-        datasets: [
-          {
-            ...chart.datasets,
-            backgroundColor: colors.blue.darken2,
-            maxBarThickness: 64,
-          },
-        ],
+        datasets: Array.isArray(chart.datasets)
+          ? chart.datasets
+          : [
+              {
+                ...chart.datasets,
+                backgroundColor: colors.blue.darken2,
+                maxBarThickness: 64,
+              },
+            ],
       }
       loading.value = false
     }
 
     if (id_contract.value) {
-      setReportData({
-        id_counterpartie: id_counterpartie.value,
-        id_contract: id_contract.value,
-        type_dict: 'counterparties',
-      })
+      updateData(
+        {
+          id_counterpartie: id_counterpartie.value,
+          id_contract: id_contract.value,
+          type_dict: 'counterparties',
+        },
+        {
+          id_counterpartie: id_counterpartie.value,
+          id_contract: id_contract.value,
+          type_dict: 'counterparties',
+        }
+      )
       return
     }
 
     if (id_counterpartie.value) {
-      setReportData({
-        id_counterpartie: id_counterpartie.value,
-        type_dict: 'counterparties',
-      })
+      updateData(
+        {
+          id_counterpartie: id_counterpartie.value,
+          type_dict: 'counterparties',
+        },
+        {
+          id_counterpartie: id_counterpartie.value,
+          type_dict: 'counterparties',
+        }
+      )
       return
     }
 
     if (id_group.value) {
-      setReportData({
-        id_group: id_group.value,
-        type_dict: 'groups',
-      })
+      updateData(
+        {
+          id_group: id_group.value,
+          type_dict: 'groups',
+        },
+        {
+          id_group: id_group.value,
+          type_dict: 'groups',
+        }
+      )
       return
     }
 
     if (date.value) {
-      setReportData({})
+      updateData(
+        {
+          type_dict: 'groups',
+        },
+        {}
+      )
       return
     }
 
@@ -113,21 +146,20 @@ export const useReportData = (props: UseReportData = {}) => {
     loading.value = false
   }
 
-  const updateProps = (newProps: UseReportData) => {
-    props.type_graph = newProps.type_graph
-    updateReportData()
-  }
-
-  watch([id_group, id_counterpartie, id_contract, date], updateReportData, {
-    immediate: true,
-  })
+  watch(
+    [id_group, id_counterpartie, id_contract, date, type_graph, type_group],
+    refetch,
+    {
+      immediate: true,
+    }
+  )
 
   return {
     data: reportData,
     chartData,
     prevData: prevReportData,
     loading,
-    refetch: updateReportData,
-    updateProps,
+    type_graph,
+    type_group,
   }
 }

@@ -35,7 +35,7 @@
                 :color="view.color"
                 :loading="loading"
                 :to="`/monitoring/${view.value}`"
-                @click="() => setGraphType(view.value)"
+                @click="() => (graphType = view.value)"
                 :active="graphType === view.value"
               >
                 <vue-autocounter
@@ -158,26 +158,17 @@ export default defineComponent({
     }
     const color = 'rgba(255, 255, 255, .8)'
 
-    const graphType = ref<string>('is_current')
-    const setGraphType = (value: string) => {
-      graphType.value = value
-    }
-
     // Report Data
     const {
       data: reportData,
       prevData: prevReportData,
       loading: reportLoading,
       chartData,
-      refetch,
-      updateProps,
-    } = useReportData({ type_group: 'itog', type_graph: graphType.value })
+      type_graph,
+      type_group,
+    } = useReportData({ type_group: 'itog' })
 
     const loading = ref<string | boolean>(reportLoading.value)
-
-    watch(graphType, (type_graph: string) => {
-      updateProps({ type_graph })
-    })
 
     watch(reportLoading, (value) => {
       if (value) {
@@ -195,8 +186,7 @@ export default defineComponent({
       reportData: computed(() => reportData.value.models?.[0] ?? {}),
       reportLoading,
       loading,
-      graphType,
-      setGraphType,
+      graphType: type_graph,
       dashboardViewList,
     }
   },

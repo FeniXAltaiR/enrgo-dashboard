@@ -39,10 +39,9 @@ export default defineComponent({
 
   setup() {
     const route = useRoute()
-    const { data: reportData, loading } = useReportData({
-      type_group: 'list',
-      type_detail: route.params.detail as string,
-    })
+    const { data: reportData, loading, type_group } = useReportData()
+
+    type_group.value = 'list'
 
     return { reportData, loading }
   },
