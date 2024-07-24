@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import { store, key } from './store'
 import keycloak from '@/utils/keycloak'
 
 // Vuetify
@@ -44,7 +44,7 @@ const vuetify = createVuetify({
 
 keycloak.init({ onLoad: 'login-required' }).then(() => {
   createApp(App)
-    .use(store)
+    .use(store, key)
     .use(router)
     .use(vuetify)
     .use(VueKinesis)

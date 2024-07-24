@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import ToolbarFilters from '@/components/Toolbar/Filters.vue'
 import ToolbarDatePicker from '@/components/Toolbar/DatePicker.vue'
 

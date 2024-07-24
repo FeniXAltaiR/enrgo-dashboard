@@ -16,7 +16,6 @@
   <v-autocomplete
     label="Контрагент"
     :items="filteredCounterparties"
-    style="max-width: 320px"
     density="compact"
     variant="solo"
     hide-details
@@ -25,6 +24,10 @@
     v-model="id_counterpartie"
     single-line
     clearable
+    multiple
+    chips
+    closable-chips
+    class="filters__autocomplete"
   ></v-autocomplete>
 
   <v-autocomplete
@@ -39,15 +42,14 @@
     v-model="id_contract"
     single-line
     clearable
-    :disabled="!id_counterpartie"
+    :disabled="!id_counterpartie.length"
   ></v-autocomplete>
 </template>
 
 <script lang="ts">
 import { watch } from 'vue'
 import { defineComponent, ref, computed } from 'vue'
-import { useStore } from 'vuex'
-import { DictsIds } from '@/store'
+import { DictsIds, useStore } from '@/store'
 
 export default defineComponent({
   name: 'ToolbarFilters',
@@ -67,10 +69,9 @@ export default defineComponent({
     })
 
     const filteredContracts = computed(() => {
-      if (id_counterpartie.value) {
-        return dicts.value.contracts.filter(
-          (dictItem: any) =>
-            dictItem.id_counterpartie === id_counterpartie.value
+      if (id_counterpartie.value.length) {
+        return dicts.value.contracts.filter((dictItem: any) =>
+          id_counterpartie.value.includes(dictItem.id_counterpartie)
         )
       }
 
@@ -84,7 +85,7 @@ export default defineComponent({
 
     const id_group = computed(() => store.state.dictsIds.id_group)
     watch(id_group, () => {
-      store.commit('setDictId', { dict: DictsIds.Counterpartie, id: null })
+      store.commit('setDictId', { dict: DictsIds.Counterpartie, id: [] })
       store.commit('setDictId', { dict: DictsIds.Contract, id: null })
     })
 
@@ -124,3 +125,14 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+.filters__autocomplete {
+  max-width: 320px;
+}
+
+.filters__autocomplete .v-field__input {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+</style>

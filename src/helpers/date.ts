@@ -11,7 +11,10 @@ export const getDateRangeOfMonth = (date?: string, format = 'YYYY-MM-DD') => {
   ]
 }
 
-export const getDateRangeOfYear = (date?: string, format = 'YYYY-MM-DD') => {
+export const getDateRangeOfYear = (
+  date?: string,
+  format = 'YYYY-MM-DD'
+): [string, string] => {
   return [
     dayjs(date).subtract(1, 'years').format(format),
     dayjs(date).format(format),

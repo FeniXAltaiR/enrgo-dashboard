@@ -1,6 +1,7 @@
-import { createStore } from 'vuex'
+import { createStore, Store, useStore as baseUseStore } from 'vuex'
 import { getDateRangeOfYear } from '@/helpers'
 import api from '@/api/endpoints'
+import { InjectionKey } from 'vue'
 
 export enum Dicts {
   Groups = 'groups',
@@ -14,21 +15,40 @@ export enum DictsIds {
   Contract = 'id_contract',
 }
 
-export default createStore({
+export interface State {
+  dicts: Record<Dicts, any[]>
+  dictsIds: StateDictsIdsMapping
+  toolbarDate: [string, string] | null
+}
+
+export type StateDictsIdsMapping = {
+  [DictsIds.Group]: string | null
+  [DictsIds.Counterpartie]: string[]
+  [DictsIds.Contract]: string | null
+}
+
+// define injection key
+export const key: InjectionKey<Store<State>> = Symbol()
+
+export const useStore = () => {
+  return baseUseStore(key)
+}
+
+export const store = createStore<State>({
   state: {
-    toolbarDate: getDateRangeOfYear() as [string, string] | null,
+    toolbarDate: getDateRangeOfYear(),
 
     dictsIds: {
       [DictsIds.Group]: null,
-      [DictsIds.Counterpartie]: null,
+      [DictsIds.Counterpartie]: [],
       [DictsIds.Contract]: null,
-    } as Record<DictsIds, string | null>,
+    },
 
     dicts: {
       [Dicts.Groups]: [],
       [Dicts.Counterparties]: [],
       [Dicts.Contracts]: [],
-    } as Record<Dicts, any[]>,
+    },
   },
 
   getters: {},

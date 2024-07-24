@@ -1,6 +1,6 @@
 import { computed, Ref, ref, toRef, ToRefs, toRefs, watch } from 'vue'
-import { useStore } from 'vuex'
 import api from '@/api/endpoints'
+import { useStore } from '@/store'
 import { ChartData } from 'chart.js'
 
 // @ts-ignore
@@ -52,8 +52,8 @@ export const useReportData = (props?: UseReportDataProps) => {
     loading.value = 'warning'
 
     const updateData = async (
-      reportParams: Record<string, string> = {},
-      chartParams: Record<string, string> = {}
+      reportParams: Record<string, string | string[]> = {},
+      chartParams: Record<string, string | string[]> = {}
     ) => {
       const { data: reports } = await api.reports.post({
         date_from: date.value?.[0] ?? null,
@@ -73,15 +73,12 @@ export const useReportData = (props?: UseReportDataProps) => {
       reportData.value = reports
       chartData.value = {
         labels: chart.labels,
-        datasets: Array.isArray(chart.datasets)
-          ? chart.datasets
-          : [
-              {
-                ...chart.datasets,
-                backgroundColor: colors.blue.darken2,
-                maxBarThickness: 64,
-              },
-            ],
+        datasets:
+          chart.datasets?.map((dataset: Record<string, string>) => ({
+            ...dataset,
+            backgroundColor: colors.blue.darken2,
+            maxBarThickness: 64,
+          })) ?? [],
       }
       loading.value = false
     }
@@ -102,7 +99,7 @@ export const useReportData = (props?: UseReportDataProps) => {
       return
     }
 
-    if (id_counterpartie.value) {
+    if (id_counterpartie.value.length) {
       updateData(
         {
           id_counterpartie: id_counterpartie.value,
