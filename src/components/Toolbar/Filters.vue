@@ -21,7 +21,7 @@
     hide-details
     item-title="name"
     item-value="id"
-    v-model="id_counterpartie"
+    v-model="id_counterparties"
     single-line
     clearable
     multiple
@@ -42,7 +42,7 @@
     v-model="id_contract"
     single-line
     clearable
-    :disabled="!id_counterpartie.length"
+    :disabled="!id_counterparties.length"
   ></v-autocomplete>
 </template>
 
@@ -69,9 +69,9 @@ export default defineComponent({
     })
 
     const filteredContracts = computed(() => {
-      if (id_counterpartie.value.length) {
+      if (id_counterparties.value.length) {
         return dicts.value.contracts.filter((dictItem: any) =>
-          id_counterpartie.value.includes(dictItem.id_counterpartie)
+          id_counterparties.value.includes(dictItem.id_counterparties)
         )
       }
 
@@ -89,10 +89,10 @@ export default defineComponent({
       store.commit('setDictId', { dict: DictsIds.Contract, id: null })
     })
 
-    const id_counterpartie = computed(
-      () => store.state.dictsIds.id_counterpartie
+    const id_counterparties = computed(
+      () => store.state.dictsIds.id_counterparties
     )
-    watch(id_counterpartie, () => {
+    watch(id_counterparties, () => {
       store.commit('setDictId', { dict: DictsIds.Contract, id: null })
     })
 
@@ -108,10 +108,10 @@ export default defineComponent({
         store.commit('setDictId', { dict: DictsIds.Group, id })
       },
 
-      get id_counterpartie() {
-        return store.state.dictsIds.id_counterpartie
+      get id_counterparties() {
+        return store.state.dictsIds.id_counterparties
       },
-      set id_counterpartie(id) {
+      set id_counterparties(id) {
         store.commit('setDictId', { dict: DictsIds.Counterpartie, id })
       },
 

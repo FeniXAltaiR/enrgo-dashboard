@@ -34,7 +34,9 @@ export interface UseReportDataProps {
 export const useReportData = (props?: UseReportDataProps) => {
   const store = useStore()
   const id_group = computed(() => store.state.dictsIds.id_group)
-  const id_counterpartie = computed(() => store.state.dictsIds.id_counterpartie)
+  const id_counterparties = computed(
+    () => store.state.dictsIds.id_counterparties
+  )
   const id_contract = computed(() => store.state.dictsIds.id_contract)
   const date = computed(() => store.state.toolbarDate)
 
@@ -86,12 +88,12 @@ export const useReportData = (props?: UseReportDataProps) => {
     if (id_contract.value) {
       updateData(
         {
-          id_counterpartie: id_counterpartie.value,
+          id_counterparties: id_counterparties.value,
           id_contract: id_contract.value,
           type_dict: 'counterparties',
         },
         {
-          id_counterpartie: id_counterpartie.value,
+          id_counterparties: id_counterparties.value,
           id_contract: id_contract.value,
           type_dict: 'counterparties',
         }
@@ -99,14 +101,14 @@ export const useReportData = (props?: UseReportDataProps) => {
       return
     }
 
-    if (id_counterpartie.value.length) {
+    if (id_counterparties.value.length) {
       updateData(
         {
-          id_counterpartie: id_counterpartie.value,
+          id_counterparties: id_counterparties.value,
           type_dict: 'counterparties',
         },
         {
-          id_counterpartie: id_counterpartie.value,
+          id_counterparties: id_counterparties.value,
           type_dict: 'counterparties',
         }
       )
@@ -144,7 +146,7 @@ export const useReportData = (props?: UseReportDataProps) => {
   }
 
   watch(
-    [id_group, id_counterpartie, id_contract, date, type_graph, type_group],
+    [id_group, id_counterparties, id_contract, date, type_graph, type_group],
     refetch,
     {
       immediate: true,

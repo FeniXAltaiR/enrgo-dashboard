@@ -11,7 +11,7 @@ export enum Dicts {
 
 export enum DictsIds {
   Group = 'id_group',
-  Counterpartie = 'id_counterpartie',
+  Counterpartie = 'id_counterparties',
   Contract = 'id_contract',
 }
 
