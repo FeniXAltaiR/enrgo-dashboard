@@ -71,16 +71,11 @@ export default defineComponent({
     const filteredContracts = computed(() => {
       if (id_counterparties.value.length) {
         return dicts.value.contracts.filter((dictItem: any) =>
-          id_counterparties.value.includes(dictItem.id_counterparties)
+          id_counterparties.value.includes(dictItem.id_counterpartie)
         )
       }
 
-      const counterpartieIds = filteredCounterparties.value.map(
-        (dictItem: any) => dictItem.id
-      )
-      return dicts.value.contracts.filter((dictItem: any) =>
-        counterpartieIds.includes(dictItem.id_counterpartie)
-      )
+      return []
     })
 
     const id_group = computed(() => store.state.dictsIds.id_group)
