@@ -10,9 +10,9 @@ export enum Dicts {
 }
 
 export enum DictsIds {
-  Group = 'id_group',
+  Group = 'id_groups',
   Counterpartie = 'id_counterparties',
-  Contract = 'id_contract',
+  Contract = 'id_contracts',
 }
 
 export interface State {
@@ -22,9 +22,9 @@ export interface State {
 }
 
 export type StateDictsIdsMapping = {
-  [DictsIds.Group]: string | null
+  [DictsIds.Group]: string[]
   [DictsIds.Counterpartie]: string[]
-  [DictsIds.Contract]: string | null
+  [DictsIds.Contract]: string[]
 }
 
 // define injection key
@@ -39,9 +39,9 @@ export const store = createStore<State>({
     toolbarDate: getDateRangeOfYear(),
 
     dictsIds: {
-      [DictsIds.Group]: null,
+      [DictsIds.Group]: [],
       [DictsIds.Counterpartie]: [],
-      [DictsIds.Contract]: null,
+      [DictsIds.Contract]: [],
     },
 
     dicts: {
