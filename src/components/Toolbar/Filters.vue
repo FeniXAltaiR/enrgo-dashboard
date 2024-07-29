@@ -1,6 +1,6 @@
 <template>
   <v-autocomplete
-    label="Группа контрагентов"
+    label="Группы заказчиков"
     :items="dicts.groups"
     style="max-width: 320px"
     density="compact"
@@ -18,7 +18,7 @@
   ></v-autocomplete>
 
   <v-autocomplete
-    label="Контрагент"
+    label="Заказчики"
     :items="filteredCounterparties"
     density="compact"
     variant="solo"
@@ -35,7 +35,7 @@
   ></v-autocomplete>
 
   <v-autocomplete
-    label="Договор"
+    label="Договора"
     :items="filteredContracts"
     style="max-width: 320px"
     density="compact"
