@@ -1,11 +1,13 @@
 export type GetSessionStorageValue<T> = {
   key: string
   formatter?: (value: string) => T
+  defaultValue: T
 }
 
 export const getSessionStorageValue = <T>({
   key,
   formatter,
+  defaultValue,
 }: GetSessionStorageValue<T>): T | string | null => {
   const value = window.sessionStorage.getItem(key)
 
@@ -13,7 +15,7 @@ export const getSessionStorageValue = <T>({
     return formatter(value) as T
   }
 
-  return value
+  return defaultValue
 }
 
 export type SetSessionStorageValue = {

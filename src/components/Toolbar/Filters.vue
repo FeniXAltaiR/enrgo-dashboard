@@ -110,11 +110,11 @@ export default defineComponent({
       Object.values(DictsIds).forEach((DictId) => {
         store.commit('setDictId', {
           dict: DictId,
-          id:
-            getSessionStorageValue<string[]>({
-              key: DictId,
-              formatter: (value) => value.split(','),
-            }) ?? [],
+          id: getSessionStorageValue<string[]>({
+            key: DictId,
+            formatter: (value) => value.split(','),
+            defaultValue: [],
+          }),
         })
       })
     }
