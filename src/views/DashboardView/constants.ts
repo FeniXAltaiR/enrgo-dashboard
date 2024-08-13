@@ -2,26 +2,26 @@ import { DashboardViewInfo } from './types'
 
 export const dashboardViewList: DashboardViewInfo[] = [
   {
-    value: 'is_current',
-    title: 'Состояние договора',
-    color: 'warning',
-    suffix: 'На исполнении',
-  },
-  {
     value: 'c_price',
     title: 'Цена договора',
     color: 'info',
     suffix: 'руб',
   },
   {
+    value: 'is_current',
+    title: 'Состояние договора',
+    color: 'warning',
+    suffix: 'На исполнении',
+  },
+  {
     value: 'profit',
-    title: 'Плановая прибыль',
+    title: 'Выполнено',
     color: 'success',
     suffix: 'руб',
   },
   {
     value: 'curent_profit',
-    title: 'Прибыль на текущую дату',
+    title: 'Оплачено',
     color: 'success',
     suffix: 'руб',
   },
@@ -33,7 +33,7 @@ export const dashboardViewList: DashboardViewInfo[] = [
   },
   {
     value: 'e_sum',
-    title: 'Расходы',
+    title: 'Кредиторская задолженность',
     color: 'error',
     suffix: 'руб',
   },
