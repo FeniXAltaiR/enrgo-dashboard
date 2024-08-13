@@ -11,7 +11,7 @@ export const dashboardViewList: DashboardViewInfo[] = [
     value: 'is_current',
     title: 'Состояние договора',
     color: 'warning',
-    suffix: 'На исполнении',
+    suffix: 'Выполняется',
   },
   {
     value: 'profit',

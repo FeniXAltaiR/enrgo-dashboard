@@ -53,6 +53,23 @@
                   @finished="loading = false"
                   separator="."
                 />
+                <vue-autocounter
+                  v-if="view.value === 'is_current'"
+                  :startAmount="
+                    prevReportData?.is_completed
+                      ? prevReportData?.is_completed
+                      : 0
+                  "
+                  :endAmount="
+                    reportData?.is_completed ? reportData?.is_completed : 0
+                  "
+                  :duration="1"
+                  :suffix="` Закрыт`"
+                  :autoinit="true"
+                  @finished="loading = false"
+                  separator="."
+                  @click="() => (graphType = 'is_completed')"
+                />
               </dashboard-view-card-wrapper>
             </v-layout>
           </div>

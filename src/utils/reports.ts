@@ -18,6 +18,7 @@ export interface ReportDataColumn {
 
 export interface ReportDataModel {
   is_current?: number
+  is_completed?: number
   debt?: number
   profit?: number
   c_price?: number
@@ -69,6 +70,12 @@ export const useReportData = (props?: UseReportDataProps) => {
         date_to: date.value?.[1] ?? null,
         type_graph: type_graph.value,
         ...chartParams,
+      })
+
+      /* Высчитываем кол-во закрытых договоров */
+      reports.models.forEach((reportItem: any) => {
+        reportItem.is_completed =
+          (reportItem.ccount ?? 0) - (reportItem.is_current ?? 0)
       })
 
       prevReportData.value = reportData.value
