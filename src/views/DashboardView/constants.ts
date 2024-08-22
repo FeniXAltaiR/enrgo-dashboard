@@ -3,15 +3,21 @@ import { DashboardViewInfo } from './types'
 export const dashboardViewList: DashboardViewInfo[] = [
   {
     value: 'c_price',
-    title: 'Цена договора',
+    title: 'Цена',
     color: 'info',
     suffix: 'руб',
   },
   {
     value: 'is_current',
-    title: 'Состояние договора',
+    title: 'Выполняется',
     color: 'warning',
-    suffix: 'Выполняется',
+    suffix: '',
+  },
+  {
+    value: 'is_completed',
+    title: 'Закрыто',
+    color: 'warning',
+    suffix: '',
   },
   {
     value: 'profit',
@@ -27,13 +33,13 @@ export const dashboardViewList: DashboardViewInfo[] = [
   },
   {
     value: 'debt',
-    title: 'Дебиторская задолженность',
+    title: 'Дебиторская',
     color: 'error',
     suffix: 'руб',
   },
   {
     value: 'e_sum',
-    title: 'Кредиторская задолженность',
+    title: 'Кредиторская',
     color: 'error',
     suffix: 'руб',
   },

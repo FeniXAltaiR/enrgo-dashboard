@@ -3,12 +3,6 @@
     <v-app-bar color="grey-darken-4" class="px-4">
       <v-layout style="column-gap: 12px" class="align-center">
         <v-btn
-          icon="mdi-exit-to-app"
-          replace
-          href="/"
-          density="comfortable"
-        ></v-btn>
-        <v-btn
           icon="mdi-home"
           replace
           density="comfortable"
@@ -20,18 +14,19 @@
         <v-spacer></v-spacer>
 
         <ToolbarFilters></ToolbarFilters>
+        <v-btn
+          icon="mdi-exit-to-app"
+          replace
+          href="/"
+          density="comfortable"
+        ></v-btn>
       </v-layout>
     </v-app-bar>
 
-    <v-main
-      class="bg-grey-lighten-5"
-      style="
-        background: url('https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg');
-      "
-    >
+    <v-main class="bg-grey-darken-3">
       <kinesis-container class="h-100 overflow-hidden">
         <kinesis-element
-          :strength="0.25"
+          :strength="0"
           type="depth"
           transformOrigin="50% 50%"
           class="h-100"

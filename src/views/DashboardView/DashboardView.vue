@@ -1,8 +1,5 @@
 <template>
-  <v-container
-    class="flex-1-1 flex-wrap grey-lighten-5"
-    style="max-width: 1280px"
-  >
+  <v-container class="flex-1-1 flex-wrap white mt-5" style="max-width: 1280px">
     <v-row>
       <v-col cols="12" md="6" sm="12">
         <v-card
@@ -23,56 +20,27 @@
       </v-col>
 
       <v-col cols="12" md="6" sm="6">
-        <v-layout class="h-100 flex-wrap" style="gap: 12px">
-          <div
-            v-for="view in dashboardViewList"
-            :key="view.value"
-            style="width: calc(50% - 12px)"
+        <v-layout class="flex-wrap" style="gap: 12px">
+          <dashboard-view-card-wrapper
+            title="Договора"
+            :loading="loading"
+            :items="dashboardViewList.slice(0, 5)"
+            :prevReportData="prevReportData"
+            :reportData="reportData"
+            :graphType="graphType"
+            @updateGraphType="(value) => (graphType = value)"
           >
-            <v-layout class="flex-column h-100" style="overflow: initial">
-              <dashboard-view-card-wrapper
-                :title="view.title"
-                :color="view.color"
-                :loading="loading"
-                :to="`/monitoring/${view.value}`"
-                @click="() => (graphType = view.value)"
-                :active="graphType === view.value"
-              >
-                <vue-autocounter
-                  :startAmount="
-                    prevReportData?.[view.value]
-                      ? prevReportData?.[view.value]
-                      : 0
-                  "
-                  :endAmount="
-                    reportData?.[view.value] ? reportData?.[view.value] : 0
-                  "
-                  :duration="1"
-                  :suffix="` ${view.suffix}`"
-                  :autoinit="true"
-                  @finished="loading = false"
-                  separator="."
-                />
-                <vue-autocounter
-                  v-if="view.value === 'is_current'"
-                  :startAmount="
-                    prevReportData?.is_completed
-                      ? prevReportData?.is_completed
-                      : 0
-                  "
-                  :endAmount="
-                    reportData?.is_completed ? reportData?.is_completed : 0
-                  "
-                  :duration="1"
-                  :suffix="` Закрыт`"
-                  :autoinit="true"
-                  @finished="loading = false"
-                  separator="."
-                  @click="() => (graphType = 'is_completed')"
-                />
-              </dashboard-view-card-wrapper>
-            </v-layout>
-          </div>
+          </dashboard-view-card-wrapper>
+          <dashboard-view-card-wrapper
+            title="Задолженность"
+            :loading="loading"
+            :items="dashboardViewList.slice(5)"
+            :prevReportData="prevReportData"
+            :reportData="reportData"
+            :graphType="graphType"
+            @updateGraphType="(value) => (graphType = value)"
+          >
+          </dashboard-view-card-wrapper>
         </v-layout>
       </v-col>
     </v-row>
@@ -173,7 +141,7 @@ export default defineComponent({
         padding: 12,
       },
     }
-    const color = 'rgba(255, 255, 255, .8)'
+    const color = 'white'
 
     // Report Data
     const {

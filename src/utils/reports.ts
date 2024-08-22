@@ -40,6 +40,8 @@ export const useReportData = (props?: UseReportDataProps) => {
   )
   const id_contracts = computed(() => store.state.dictsIds.id_contracts)
   const date = computed(() => store.state.toolbarDate)
+  const years = computed(() => store.state.years)
+  const periods = computed(() => store.state.periods)
 
   // props
   const type_graph = ref<keyof ReportDataModel>('is_current')
@@ -52,7 +54,7 @@ export const useReportData = (props?: UseReportDataProps) => {
   >(undefined)
   const loading = ref<string | boolean>(false)
   const refetch = () => {
-    loading.value = 'warning'
+    loading.value = 'primary'
 
     const updateData = async (
       reportParams: Record<string, string | string[]> = {},
@@ -61,6 +63,8 @@ export const useReportData = (props?: UseReportDataProps) => {
       const { data: reports } = await api.reports.post({
         date_from: date.value?.[0] ?? null,
         date_to: date.value?.[1] ?? null,
+        years: years.value,
+        periods: periods.value,
         type_group: type_group.value,
         ...reportParams,
       })
@@ -68,6 +72,8 @@ export const useReportData = (props?: UseReportDataProps) => {
       const { data: chart } = await api.reports.chart({
         date_from: date.value?.[0] ?? null,
         date_to: date.value?.[1] ?? null,
+        years: years.value,
+        periods: periods.value,
         type_graph: type_graph.value,
         ...chartParams,
       })
@@ -153,7 +159,16 @@ export const useReportData = (props?: UseReportDataProps) => {
   }
 
   watch(
-    [id_groups, id_counterparties, id_contracts, date, type_graph, type_group],
+    [
+      id_groups,
+      id_counterparties,
+      id_contracts,
+      date,
+      type_graph,
+      type_group,
+      years,
+      periods,
+    ],
     refetch,
     {
       immediate: true,

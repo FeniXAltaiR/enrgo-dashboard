@@ -2,7 +2,6 @@
   <v-autocomplete
     label="Группы заказчиков"
     :items="dicts.groups"
-    style="max-width: 320px"
     density="compact"
     variant="solo"
     hide-details
@@ -37,7 +36,6 @@
   <v-autocomplete
     label="Договора"
     :items="filteredContracts"
-    style="max-width: 320px"
     density="compact"
     variant="solo"
     hide-details
@@ -159,7 +157,7 @@ export default defineComponent({
 
 <style>
 .filters__autocomplete {
-  max-width: 320px;
+  max-width: 240px;
 }
 
 .filters__autocomplete .v-field__input {

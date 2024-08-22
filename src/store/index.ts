@@ -19,6 +19,8 @@ export interface State {
   dicts: Record<Dicts, any[]>
   dictsIds: StateDictsIdsMapping
   toolbarDate: [string, string] | null
+  years: string[]
+  periods: string[]
 }
 
 export type StateDictsIdsMapping = {
@@ -49,6 +51,10 @@ export const store = createStore<State>({
       [Dicts.Counterparties]: [],
       [Dicts.Contracts]: [],
     },
+
+    years: [],
+
+    periods: [],
   },
 
   getters: {},
@@ -64,6 +70,14 @@ export const store = createStore<State>({
 
     setToolbarDate(state, date) {
       state.toolbarDate = date
+    },
+
+    setYears(state, years) {
+      state.years = years
+    },
+
+    setPeriods(state, periods) {
+      state.periods = periods
     },
   },
 
