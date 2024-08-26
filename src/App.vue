@@ -2,24 +2,13 @@
   <v-layout class="flex-1-1 h-100">
     <v-app-bar color="grey-darken-4" class="px-4">
       <v-layout style="column-gap: 12px" class="align-center">
-        <v-btn
-          icon="mdi-home"
-          replace
-          density="comfortable"
-          to="/monitoring"
-        ></v-btn>
+        <v-btn icon="mdi-home" replace href="/" density="comfortable"></v-btn>
 
         <ToolbarDatePicker></ToolbarDatePicker>
 
         <v-spacer></v-spacer>
 
         <ToolbarFilters></ToolbarFilters>
-        <v-btn
-          icon="mdi-exit-to-app"
-          replace
-          href="/"
-          density="comfortable"
-        ></v-btn>
       </v-layout>
     </v-app-bar>
 

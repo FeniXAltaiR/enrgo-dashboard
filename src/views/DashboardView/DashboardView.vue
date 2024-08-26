@@ -29,6 +29,7 @@
             :reportData="reportData"
             :graphType="graphType"
             @updateGraphType="(value) => (graphType = value)"
+            :showTableIcon="true"
           >
           </dashboard-view-card-wrapper>
           <dashboard-view-card-wrapper

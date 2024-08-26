@@ -4,8 +4,19 @@
     style="position: relative"
     fluid
   >
+    <v-card flat style="border-radius: 0">
+      <v-card-title class="text-left">
+        <v-btn
+          icon="mdi-arrow-left"
+          density="comfortable"
+          flat
+          to="/monitoring"
+        ></v-btn>
+        <span>{{ title }}</span>
+      </v-card-title>
+    </v-card>
     <v-table density="compact" hover class="h-100 overflow-auto">
-      <thead>
+      <thead class="position-sticky top-0 bg-white" style="top: 0; z-index: 1">
         <tr>
           <th
             class="text-left"
@@ -19,7 +30,11 @@
       </thead>
       <tbody>
         <tr v-for="(model, index) in reportData.models" :key="index">
-          <td v-for="item in reportData.columns" :key="item.value">
+          <td
+            v-for="item in reportData.columns"
+            :key="item.value"
+            class="text-left"
+          >
             {{ model[item.value as keyof ReportDataModel] }}
           </td>
         </tr>
@@ -29,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import { useReportData } from '@/utils/reports'
 import { ReportDataModel } from '@/utils/reports'
 import { useRoute } from 'vue-router'
@@ -41,9 +56,13 @@ export default defineComponent({
     const route = useRoute()
     const { data: reportData, loading, type_group } = useReportData()
 
-    type_group.value = 'list'
+    onMounted(() => {
+      type_group.value = 'list'
+    })
 
-    return { reportData, loading }
+    const title = 'Таблица'
+
+    return { reportData, loading, title }
   },
 })
 </script>

@@ -6,6 +6,15 @@
   >
     <v-card-title class="d-flex font-weight-bold text-h6">
       <span>{{ title }}</span>
+      <v-spacer></v-spacer>
+      <v-btn
+        v-if="showTableIcon"
+        density="compact"
+        icon="mdi-table"
+        variant="text"
+        class="ml-1"
+        :to="`/monitoring/table`"
+      ></v-btn>
     </v-card-title>
 
     <v-card-text
@@ -34,13 +43,6 @@
         separator="."
         class="font-weight-bold"
       />
-      <v-btn
-        density="compact"
-        icon="mdi-table"
-        variant="text"
-        class="ml-1"
-        :to="`/monitoring/${view.value}`"
-      ></v-btn>
     </v-card-text>
   </v-card>
 </template>
@@ -85,6 +87,10 @@ export default defineComponent({
     reportData: {
       type: Object as PropType<ReportDataModel>,
       default: () => ({}),
+    },
+    showTableIcon: {
+      type: Boolean,
+      default: false,
     },
   },
 
