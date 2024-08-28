@@ -15,7 +15,7 @@
         <span>{{ title }}</span>
       </v-card-title>
     </v-card>
-    <v-table density="compact" hover class="h-100 overflow-auto">
+    <v-table density="compact" hover class="overflow-auto flex-1-1">
       <thead class="position-sticky top-0 bg-white" style="top: 0; z-index: 1">
         <tr>
           <th

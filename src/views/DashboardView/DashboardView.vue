@@ -1,12 +1,15 @@
 <template>
-  <v-container class="flex-1-1 flex-wrap white mt-5" style="max-width: 1280px">
-    <v-row>
+  <v-container
+    class="flex-1-1 flex-wrap white overflow-hidden"
+    style="max-width: 1280px"
+  >
+    <v-row class="pt-5">
       <v-col cols="12" md="6" sm="12">
         <v-card
           elevation="12"
           :color="color"
           title="Итоговые значения"
-          class="d-flex flex-column w-100 h-100"
+          class="d-flex flex-column w-100"
         >
           <v-layout class="align-end justify-center flex-1-1">
             <BarChart
@@ -32,7 +35,9 @@
             :showTableIcon="true"
           >
           </dashboard-view-card-wrapper>
-          <dashboard-view-card-wrapper
+
+          <!-- Окно задолженностей -->
+          <!-- <dashboard-view-card-wrapper
             title="Задолженность"
             :loading="loading"
             :items="dashboardViewList.slice(5)"
@@ -41,7 +46,7 @@
             :graphType="graphType"
             @updateGraphType="(value) => (graphType = value)"
           >
-          </dashboard-view-card-wrapper>
+          </dashboard-view-card-wrapper> -->
         </v-layout>
       </v-col>
     </v-row>

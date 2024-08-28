@@ -2,7 +2,7 @@
   <v-layout class="flex-1-1 h-100">
     <v-app-bar color="grey-darken-4" class="px-4">
       <v-layout style="column-gap: 12px" class="align-center">
-        <v-btn icon="mdi-home" replace href="/" density="comfortable"></v-btn>
+        <v-btn icon="mdi-cog" replace href="/" density="comfortable"></v-btn>
 
         <ToolbarDatePicker></ToolbarDatePicker>
 
@@ -22,7 +22,11 @@
         >
           <router-view v-slot="{ Component, route }">
             <!-- <transition appear mode="out-in"> -->
-            <component :is="Component" :key="route.path" class="h-100" />
+            <component
+              :is="Component"
+              :key="route.path"
+              class="h-100 d-flex flex-column"
+            />
             <!-- </transition> -->
           </router-view>
         </kinesis-element>

@@ -1,5 +1,5 @@
 <template>
-  <vue-date-picker
+  <!-- <vue-date-picker
     v-model="date"
     style="max-width: 260px"
     :teleport="true"
@@ -11,7 +11,7 @@
     auto-apply
     range
     multi-calendars
-  ></vue-date-picker>
+  ></vue-date-picker> -->
 
   <v-autocomplete
     label="Года"
