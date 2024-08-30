@@ -1,28 +1,25 @@
 <template>
-  <v-container
-    class="flex-1-1 flex-wrap white overflow-hidden"
-    style="max-width: 1280px"
-  >
+  <v-container class="flex-1-1" fluid>
     <v-row class="pt-5">
-      <v-col cols="12" md="6" sm="12">
+      <v-col cols="12" md="9" sm="12">
         <v-card
           elevation="12"
           :color="color"
           title="Итоговые значения"
-          class="d-flex flex-column w-100"
+          class="d-flex flex-column w-100 h-100"
         >
           <v-layout class="align-end justify-center flex-1-1">
             <BarChart
               :key="JSON.stringify(data) + JSON.stringify(options)"
               :data="data"
               :options="options"
-              height="320"
+              height="auto"
             />
           </v-layout>
         </v-card>
       </v-col>
 
-      <v-col cols="12" md="6" sm="6">
+      <v-col cols="12" md="3" sm="6">
         <v-layout class="flex-wrap" style="gap: 12px">
           <dashboard-view-card-wrapper
             title="Договора"

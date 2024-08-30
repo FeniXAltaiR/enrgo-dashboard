@@ -14,6 +14,7 @@ export interface ReportData {
 export interface ReportDataColumn {
   value: string
   text: string
+  align?: string
 }
 
 export interface ReportDataModel {
@@ -88,12 +89,7 @@ export const useReportData = (props?: UseReportDataProps) => {
       reportData.value = reports
       chartData.value = {
         labels: chart.labels,
-        datasets:
-          chart.datasets?.map((dataset: Record<string, string>) => ({
-            ...dataset,
-            backgroundColor: colors.blue.darken2,
-            maxBarThickness: 64,
-          })) ?? [],
+        datasets: chart.datasets ?? [],
       }
       loading.value = false
     }

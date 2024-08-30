@@ -1,10 +1,6 @@
 <template>
-  <v-container
-    class="flex-1-1 flex-wrap grey-lighten-5 overflow-hidden"
-    style="position: relative"
-    fluid
-  >
-    <v-card flat style="border-radius: 0">
+  <v-container class="flex-1-1 grey-lighten-5" style="position: relative" fluid>
+    <v-card flat style="border-radius: 0" class="overflow-visible">
       <v-card-title class="text-left">
         <v-btn
           icon="mdi-arrow-left"
@@ -15,7 +11,8 @@
         <span>{{ title }}</span>
       </v-card-title>
     </v-card>
-    <v-table density="compact" hover class="overflow-auto flex-1-1">
+
+    <v-table density="compact" hover class="overflow-auto">
       <thead class="position-sticky top-0 bg-white" style="top: 0; z-index: 1">
         <tr>
           <th
@@ -33,7 +30,7 @@
           <td
             v-for="item in reportData.columns"
             :key="item.value"
-            class="text-left"
+            :class="`text-${item.align}`"
           >
             {{ model[item.value as keyof ReportDataModel] }}
           </td>
