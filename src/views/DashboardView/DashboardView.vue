@@ -73,7 +73,7 @@ export default defineComponent({
 
   setup() {
     const initialChartData: ChartData<
-      'bar',
+      'bar' | 'line',
       (number | [number, number] | null)[],
       unknown
     > = {

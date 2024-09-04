@@ -57,7 +57,7 @@ export default defineComponent({
       type_group.value = 'list'
     })
 
-    const title = 'Таблица'
+    const title = 'Табличные данные по договорам'
 
     return { reportData, loading, title }
   },

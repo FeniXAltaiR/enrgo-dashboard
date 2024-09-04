@@ -1,15 +1,18 @@
 <template>
-  <Bar :data="data" :options="options" />
+  <Bar :data="(data as any)" :options="options" />
 </template>
 
 <script lang="ts">
 import {
   Chart as ChartJS,
   Title,
+  LineElement,
+  PointElement,
   Tooltip,
   Legend,
   BarElement,
   CategoryScale,
+  Filler,
   LinearScale,
   ChartOptions,
 } from 'chart.js'
@@ -18,7 +21,17 @@ import { defineComponent, PropType } from 'vue'
 import { ChartData } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
+ChartJS.register(
+  CategoryScale,
+  PointElement,
+  LineElement,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+)
 ChartJS.register(ChartDataLabels)
 
 export default defineComponent({
@@ -31,7 +44,7 @@ export default defineComponent({
   props: {
     data: {
       type: Object as PropType<
-        ChartData<'bar', (number | [number, number] | null)[], unknown>
+        ChartData<'bar' | 'line', (number | [number, number] | null)[], unknown>
       >,
       default: () => ({}),
     },
