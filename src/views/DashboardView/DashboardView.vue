@@ -126,11 +126,12 @@ export default defineComponent({
         },
         // Change options for ALL labels of THIS CHART
         datalabels: {
-          color: 'white',
-          align: 'top',
+          // color: 'white',
+          align: 'center',
           textAlign: 'left',
           font: {
             size: 14,
+            weight: 'bold',
           },
           formatter(value, context) {
             return new Intl.NumberFormat('ru', {
