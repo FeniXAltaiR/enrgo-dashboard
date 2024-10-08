@@ -24,26 +24,18 @@
           <dashboard-view-card-wrapper
             title="Договора"
             :loading="loading"
-            :items="dashboardViewList.slice(0, 5)"
+            :items="reportColumns"
             :prevReportData="prevReportData"
             :reportData="reportData"
             :graphType="graphType"
-            @updateGraphType="(value) => (graphType = value)"
+            @updateGraphType="
+              (value) => {
+                graphType = value
+              }
+            "
             :showTableIcon="true"
           >
           </dashboard-view-card-wrapper>
-
-          <!-- Окно задолженностей -->
-          <!-- <dashboard-view-card-wrapper
-            title="Задолженность"
-            :loading="loading"
-            :items="dashboardViewList.slice(5)"
-            :prevReportData="prevReportData"
-            :reportData="reportData"
-            :graphType="graphType"
-            @updateGraphType="(value) => (graphType = value)"
-          >
-          </dashboard-view-card-wrapper> -->
         </v-layout>
       </v-col>
     </v-row>
@@ -58,9 +50,10 @@ import { defineComponent, ref, computed, watch } from 'vue'
 
 // @ts-ignore
 import colors from 'vuetify/lib/util/colors'
-import { useReportData } from '@/utils/reports'
+import { ReportDataColumn, useReportData } from '@/utils/reports'
 import { ChartData, ChartOptions } from 'chart.js'
 import { dashboardViewList } from './constants'
+import { DashboardViewInfo } from './types'
 
 export default defineComponent({
   name: 'DashboardView',
@@ -173,6 +166,12 @@ export default defineComponent({
       color,
       prevReportData: computed(() => prevReportData.value.models?.[0] ?? {}),
       reportData: computed(() => reportData.value.models?.[0] ?? {}),
+      reportColumns: computed(
+        () =>
+          reportData.value.columns
+            ?.filter((column: ReportDataColumn) => column.visible)
+            ?.sort((a, b) => (a.forder > b.forder ? 1 : -1)) ?? []
+      ),
       reportLoading,
       loading,
       graphType: type_graph,

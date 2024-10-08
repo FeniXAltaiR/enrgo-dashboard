@@ -1,46 +1,65 @@
+import { ReportDataColumn } from '@/utils/reports'
 import { DashboardViewInfo } from './types'
 
 export const dashboardViewList: DashboardViewInfo[] = [
   {
     value: 'c_price',
-    title: 'Цена',
+    text: 'Цена',
     color: 'info',
     suffix: 'руб',
   },
   {
+    value: 'ccount',
+    text: 'Количество',
+    color: 'info',
+    suffix: '',
+  },
+  {
     value: 'is_current',
-    title: 'Выполняется',
+    text: 'Выполняется',
     color: 'warning',
     suffix: '',
+  },
+  {
+    value: 'price_fulfilled',
+    text: 'Выполняется в суммах',
+    color: 'warning',
+    suffix: 'руб',
   },
   {
     value: 'is_completed',
-    title: 'Закрыто',
+    text: 'Закрыто',
     color: 'warning',
     suffix: '',
   },
   {
-    value: 'profit',
-    title: 'Выполнено',
+    value: 'price_done',
+    text: 'Выполнено',
     color: 'success',
     suffix: 'руб',
   },
   {
-    value: 'curent_profit',
-    title: 'Оплачено',
+    value: 'price_price_done',
+    text: 'Оплачено',
     color: 'success',
     suffix: 'руб',
   },
   {
-    value: 'debt',
-    title: 'Дебиторская',
-    color: 'error',
+    value: 'price_paid_y',
+    text: 'К оплате',
+    color: 'success',
     suffix: 'руб',
   },
-  {
-    value: 'e_sum',
-    title: 'Кредиторская',
-    color: 'error',
-    suffix: 'руб',
-  },
+  // {
+  //   value: 'debt',
+  //   text: 'Дебиторская',
+  //   color: 'error',
+  //   suffix: 'руб',
+  // },
+  // {
+  //   value: 'e_sum',
+  //   text: 'Кредиторская',
+  //   color: 'error',
+  //   suffix: 'руб',
+  // },
 ]

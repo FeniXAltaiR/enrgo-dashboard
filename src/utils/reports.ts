@@ -12,9 +12,11 @@ export interface ReportData {
 }
 
 export interface ReportDataColumn {
-  value: string
+  value: keyof ReportDataModel
   text: string
   align?: string
+  visible: boolean
+  forder: number
 }
 
 export interface ReportDataModel {
@@ -25,6 +27,11 @@ export interface ReportDataModel {
   c_price?: number
   e_sum?: number
   curent_profit?: number
+  ccount?: number
+  price_fulfilled?: number
+  price_done?: number
+  price_price_done?: number
+  price_paid_y?: number
 }
 
 export interface UseReportDataProps {
@@ -45,7 +52,7 @@ export const useReportData = (props?: UseReportDataProps) => {
   const periods = computed(() => store.state.periods)
 
   // props
-  const type_graph = ref<keyof ReportDataModel>('is_current')
+  const type_graph = ref<keyof ReportDataModel>('c_price')
   const type_group = ref<string>(props?.type_group ?? '')
 
   const prevReportData = ref<ReportData>({})

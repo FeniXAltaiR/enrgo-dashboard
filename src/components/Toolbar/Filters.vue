@@ -1,4 +1,6 @@
 <template>
+  <span class="font-weight-bold">ЭнергоКонцепции</span>
+
   <v-autocomplete
     label="Группы заказчиков"
     :items="dicts.groups"

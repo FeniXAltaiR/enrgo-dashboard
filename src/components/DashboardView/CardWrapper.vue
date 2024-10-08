@@ -19,7 +19,7 @@
 
     <v-card-text
       v-for="view in items"
-      :key="view.title"
+      :key="view.value"
       :class="[
         'd-flex',
         'align-center',
@@ -30,26 +30,29 @@
       ]"
       @click="() => $emit('updateGraphType', view.value)"
     >
-      <span>{{ view.title }}</span>
+      <span>{{ view.text }}</span>
       <v-spacer></v-spacer>
       <vue-autocounter
+        v-if="Number.isFinite(reportData?.[view.value])"
         :startAmount="
           prevReportData?.[view.value] ? prevReportData?.[view.value] : 0
         "
         :endAmount="reportData?.[view.value] ? reportData?.[view.value] : 0"
         :duration="1"
-        :suffix="` ${view.suffix}`"
         :autoinit="true"
         separator="."
         class="font-weight-bold"
       />
+      <span class="font-weight-bold" v-else>{{
+        reportData?.[view.value]
+      }}</span>
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, toRefs } from 'vue'
-import { ReportDataModel } from '@/utils/reports'
+import { ReportDataColumn, ReportDataModel } from '@/utils/reports'
 import { DashboardViewInfo } from '@/views/DashboardView/types'
 
 export default defineComponent({
@@ -77,7 +80,7 @@ export default defineComponent({
       default: false,
     },
     items: {
-      type: Array as PropType<DashboardViewInfo[]>,
+      type: Array as PropType<ReportDataColumn[]>,
       default: () => [],
     },
     prevReportData: {

@@ -1,12 +1,13 @@
 {
   "name": "enrgo-dashboard",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve --port 1234",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "bash ./deploy.sh"
   },
   "dependencies": {
     "@vuepic/vue-datepicker": "^5.4.0",
@@ -53,6 +54,7 @@
     "typescript": "^5.5.4"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "pre-push": "npm run deploy"
   }
 }

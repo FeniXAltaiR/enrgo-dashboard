@@ -1,8 +1,6 @@
-import { ReportDataModel } from '@/utils/reports'
+import { ReportDataColumn, ReportDataModel } from '@/utils/reports'
 
-export type DashboardViewInfo = {
-  value: keyof ReportDataModel
-  title: string
+export type DashboardViewInfo = Partial<ReportDataColumn> & {
   color: string
   suffix: string
 }
