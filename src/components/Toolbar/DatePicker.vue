@@ -1,18 +1,4 @@
 <template>
-  <!-- <vue-date-picker
-    v-model="date"
-    style="max-width: 260px"
-    :teleport="true"
-    model-type="yyyy-MM-dd"
-    format="yyyy-MM-dd"
-    :enable-time-picker="false"
-    mode-height="50"
-    locale="ru"
-    auto-apply
-    range
-    multi-calendars
-  ></vue-date-picker> -->
-
   <v-autocomplete
     label="Года"
     :items="yearsItems"
@@ -44,6 +30,8 @@
     closable-chips
     class="filters__autocomplete"
   ></v-autocomplete>
+
+  <v-checkbox v-model="is_sum" hide-details></v-checkbox>
 </template>
 
 <script lang="ts">
@@ -127,6 +115,13 @@ export default defineComponent({
 
       yearsItems,
       periodItems,
+
+      get is_sum() {
+        return store.state.is_sum
+      },
+      set is_sum(bool) {
+        store.commit('setIsSum', bool)
+      },
     }
   },
 })

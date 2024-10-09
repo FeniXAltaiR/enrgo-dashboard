@@ -1,6 +1,4 @@
 <template>
-  <span class="font-weight-bold">ЭнергоКонцепции</span>
-
   <v-autocomplete
     label="Группы заказчиков"
     :items="dicts.groups"
@@ -52,6 +50,9 @@
     class="filters__autocomplete"
     :disabled="!id_counterparties.length"
   ></v-autocomplete>
+
+  <span class="font-weight-bold">ЭнергоКонцепции</span>
+  <span class="font-weight-bold">{{ today }}</span>
 </template>
 
 <script lang="ts">
@@ -127,6 +128,8 @@ export default defineComponent({
       store.commit('setDictId', { dict, id: ids })
     }
 
+    const today = new Intl.DateTimeFormat().format()
+
     return {
       dicts,
       filteredCounterparties,
@@ -152,6 +155,8 @@ export default defineComponent({
       set id_contracts(id) {
         updateDictIds(DictsIds.Contract, id)
       },
+
+      today,
     }
   },
 })

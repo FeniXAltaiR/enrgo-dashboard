@@ -21,6 +21,7 @@ export interface State {
   toolbarDate: [string, string] | null
   years: string[]
   periods: string[]
+  is_sum: boolean
 }
 
 export type StateDictsIdsMapping = {
@@ -55,6 +56,8 @@ export const store = createStore<State>({
     years: [],
 
     periods: [],
+
+    is_sum: false,
   },
 
   getters: {},
@@ -78,6 +81,10 @@ export const store = createStore<State>({
 
     setPeriods(state, periods) {
       state.periods = periods
+    },
+
+    setIsSum(state, bool) {
+      state.is_sum = bool
     },
   },
 

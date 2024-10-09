@@ -50,6 +50,7 @@ export const useReportData = (props?: UseReportDataProps) => {
   const date = computed(() => store.state.toolbarDate)
   const years = computed(() => store.state.years)
   const periods = computed(() => store.state.periods)
+  const is_sum = computed(() => store.state.is_sum)
 
   // props
   const type_graph = ref<keyof ReportDataModel>('c_price')
@@ -74,6 +75,7 @@ export const useReportData = (props?: UseReportDataProps) => {
         years: years.value,
         periods: periods.value,
         type_group: type_group.value,
+        is_sum: is_sum.value,
         ...reportParams,
       })
 
@@ -83,6 +85,7 @@ export const useReportData = (props?: UseReportDataProps) => {
         years: years.value,
         periods: periods.value,
         type_graph: type_graph.value,
+        is_sum: is_sum.value,
         ...chartParams,
       })
 
@@ -171,6 +174,7 @@ export const useReportData = (props?: UseReportDataProps) => {
       type_group,
       years,
       periods,
+      is_sum,
     ],
     refetch,
     {

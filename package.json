@@ -1,6 +1,6 @@
 {
   "name": "enrgo-dashboard",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve --port 1234",
